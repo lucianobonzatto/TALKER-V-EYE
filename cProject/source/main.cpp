@@ -1,9 +1,10 @@
 #include <iostream>
-#include "teste.h"
+#include "Processadora.h"
 
 int main() {
-    std::cout << "hello!" << std::endl;
+    std::cout << "Hello" << std::endl;
+    Processadora teste;
 
-    std::cout << "bie!" << std::endl;
+    std::cout << "Bie" << std::endl;
     return 0;
 }
