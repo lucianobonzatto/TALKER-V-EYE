@@ -14,11 +14,12 @@ OBJ=$(subst .cpp,.o,$(subst source,objects,$(C_SOURCE)))
 CC=g++
 
 # Flags for compiler
-CC_FLAGS=-c         \
-         -W         \
-         -Wall      \
-         -ansi      \
-         -pedantic
+CC_FLAGS=-c           \
+         -lrealsense2
+#         -W           \
+#         -Wall        \
+#         -ansi      \
+#         -pedantic
 
 # Command used at clean target
 RM = rm -rf
@@ -30,18 +31,18 @@ all: objFolder $(PROJ_NAME)
 
 $(PROJ_NAME): $(OBJ)
 	@ echo 'Building $@'
-	$(CC) $^ -o $@
+	g++ $^ -o $@ -lrealsense2
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
 
 ./objects/%.o: ./source/%.cpp ./source/%.h
 	@ echo 'Building $<'
-	$(CC) $< $(CC_FLAGS) -o $@
+	g++ $< -o $@ $(CC_FLAGS)
 	@ echo ' '
 
 ./objects/main.o: ./source/main.cpp $(H_SOURCE)
 	@ echo 'Building $<'
-	$(CC) $< $(CC_FLAGS) -o $@
+	g++ $< -o $@ $(CC_FLAGS)
 	@ echo ' '
 
 objFolder:
