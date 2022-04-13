@@ -8,14 +8,20 @@ using namespace std;
 
 class Realsense {
 private:
-    rs2::pipeline p;
-
+    rs2::pipeline pipe;
+    rs2::frameset frame;
+    
+    
 public:
     Realsense();
     ~Realsense();
 
-    void readImg();
-
+    void read_img();
+    float get_depth(int x, int y);
+    int get_width();
+    int get_height();
+    
+    
 };
 
 #endif //UNTITLED_REALSENSE_H
