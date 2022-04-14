@@ -1,3 +1,0 @@
-C:/Users/lucia/Desktop/tarefa 1/untitled/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/lucia/Desktop/tarefa 1/untitled/cmake-build-debug/CMakeFiles/untitled.dir
-C:/Users/lucia/Desktop/tarefa 1/untitled/cmake-build-debug/CMakeFiles/rebuild_cache.dir
