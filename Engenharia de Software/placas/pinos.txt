@@ -1,0 +1,15 @@
+
+sinal botao obst mais proximo
+sinal botao todos os obj
+sinal botao on/off
+
+Vcc rasp 3.3V
+Vcc rasp 5V
+Gnd rasp
+
+SCL lidar
+SDA lidar
+
+Vcc bat
+sinal motor
+Gnd bat
