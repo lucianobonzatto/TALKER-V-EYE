@@ -3,9 +3,11 @@ PROJ_NAME=TALKER-V-EYE
 
 # .c files
 C_SOURCE=$(wildcard ./source/*.cpp)
+C_SOURCE_INCLUDE=$(wildcard ./include/*.cpp)
 
 # .h files
 H_SOURCE=$(wildcard ./source/*.h)
+H_SOURCE_INCLUDE=$(wildcard ./include/*.h)
 
 # Object files
 OBJ=$(subst .cpp,.o,$(subst source,objects,$(C_SOURCE)))
