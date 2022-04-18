@@ -19,3 +19,12 @@ $ make all
 run the project
 $ ./TALKER-V-EYE
 ```
+## References
+
+ ### Realsense
+ 
+ https://dev.intelrealsense.com/docs/code-samples
+ 
+ ### Lidar Lite V3
+ 
+ https://github.com/garmin/LIDARLite_RaspberryPi_Library
