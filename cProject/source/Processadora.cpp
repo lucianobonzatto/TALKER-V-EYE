@@ -19,7 +19,8 @@ Processadora::Processadora() {
                 }
             }
         }
-        std::cout << "img(" << i_aux << ")(" << j_aux << ")\t->\t" << men_dist << endl;
+        std::cout << "img(" << i_aux << ")(" << j_aux << ")\t->\t" << men_dist;
+        std::cout << "\t\t" << "lidar\t->\t" << ll_sensor.getDistance() << std::endl;
     }
 }
 

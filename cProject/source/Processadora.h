@@ -2,6 +2,7 @@
 #define UNTITLED_PROCESSADORA_H
 
 #include "Realsense.h"
+#include "LidarLite.h"
 #include <iostream>
 
 using namespace std;
@@ -9,6 +10,8 @@ using namespace std;
 class Processadora {
 private:
     Realsense rs_sensor;
+    LidarLite ll_sensor;
+
 public:
     Processadora();
     ~Processadora();

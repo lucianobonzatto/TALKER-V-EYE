@@ -18,9 +18,9 @@ CC=g++
 # Flags for compiler
 CC_FLAGS=-c           \
          -lrealsense2
+#         -ansi        \
 #         -W           \
 #         -Wall        \
-#         -ansi      \
 #         -pedantic
 
 # Command used at clean target

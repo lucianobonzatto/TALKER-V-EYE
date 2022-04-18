@@ -1,8 +1,8 @@
 #include "LidarLite.h"
 
 LidarLite::LidarLite() {
-//    sensor.i2c_init;
-//    sensor.configure(0);
+    sensor.i2c_init();
+    sensor.configure(0);
 }
 
 LidarLite::~LidarLite() {
@@ -10,7 +10,6 @@ LidarLite::~LidarLite() {
 }
 
 int LidarLite::getDistance(){
-//    sensor.takeRange();
-//    sensor.readDistance();
-    return 0;
+    sensor.takeRange();
+    return sensor.readDistance();
 }
