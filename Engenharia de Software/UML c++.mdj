@@ -1092,7 +1092,7 @@
 											"top": 439,
 											"width": 143,
 											"height": 13,
-											"text": "LidarLitev3"
+											"text": "LidarLite"
 										},
 										{
 											"_type": "LabelView",
@@ -4322,7 +4322,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "LidarLitev3",
+					"name": "LidarLite",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
