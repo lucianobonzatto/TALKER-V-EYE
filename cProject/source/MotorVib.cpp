@@ -1,23 +1,23 @@
 #include "MotorVib.h"
 
 MotorVib::MotorVib() {
-    this->intensity = 0;
-    this->pin = -1;                //Valor -1 indica nenhum pino setado.
+    intensity = 0;
+    pin = -1;                //Valor -1 indica nenhum pino setado.
 }
 
-MotorVib::MotorVib(short int pin, short int intensity) {
-    this->pin = pin;
-    this->intensity = intensity;
+MotorVib::MotorVib(short int pinP, short int intensityP) {
+    pin = pinP;
+    intensity = intensityP;
 }
 
 MotorVib::~MotorVib() {
 
 }
 
-void setIntensity(short int intensity){
-    this->intensity = intensity;
+void setIntensity(short int intensityP){
+    intensity = intensityP;
 }
 
 short int getIntensity(){
-    return this->intensity;
+    return intensity;
 }

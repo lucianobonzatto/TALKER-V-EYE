@@ -8,10 +8,10 @@ private:
 
 public:
     MotorVib();
-    MotorVib(short int pin, short int intensity = 0);
+    MotorVib(short int pinP, short int intensityP = 0);
     ~MotorVib();
 
-    void setIntensity(short int intensity);
+    void setIntensity(short int intensityP);
     short int getIntensity();
 
 };
