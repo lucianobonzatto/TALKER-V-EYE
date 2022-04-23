@@ -14,10 +14,10 @@ MotorVib::~MotorVib() {
 
 }
 
-void setIntensity(short int intensityP){
+void MotorVib::setIntensity(short int intensityP){
     intensity = intensityP;
 }
 
-short int getIntensity(){
+short int MotorVib::getIntensity(){
     return intensity;
 }

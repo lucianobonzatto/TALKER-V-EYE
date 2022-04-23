@@ -17,7 +17,8 @@ CC=g++
 
 # Flags for compiler
 CC_FLAGS=-c           \
-         -lrealsense2
+         -lrealsense2 \
+         -lopencv_core
 #         -ansi        \
 #         -W           \
 #         -Wall        \
