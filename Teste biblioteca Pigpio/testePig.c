@@ -29,6 +29,7 @@ int main(){
     */
 
     /*Em aproximadamente 5 segundos o LED vai do menor para o meior brilho.*/
+    gpioSetMode(PINO, PI_OUTPUT);
     int intensidade = 0;
     while(1){
         if(intensidade < 255)
