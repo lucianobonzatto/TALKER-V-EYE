@@ -8,6 +8,7 @@ MotorVib::MotorVib() {
 MotorVib::MotorVib(short int pinP, short int intensityP) {
     pin = pinP;
     intensity = intensityP;
+    gpioSetMode(pin, PI_OUTPUT);
 }
 
 MotorVib::~MotorVib() {
@@ -16,6 +17,12 @@ MotorVib::~MotorVib() {
 
 void MotorVib::setIntensity(short int intensityP){
     intensity = intensityP;
+    gpioPWM(pin, intensity);
+}
+
+void MotorVib::setPin(short int pinP){
+    pin = pinP;
+    gpioSetMode(pin, PI_OUTPUT);
 }
 
 short int MotorVib::getIntensity(){
