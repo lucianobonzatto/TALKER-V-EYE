@@ -34,3 +34,11 @@ float Realsense::get_depth(int x, int y){
         return -1;
     return depth.get_distance(x, y);
 }
+
+int Realsense::get_color(int x, int y){
+    rs2::video_frame color = frame.get_color_frame();
+    color.get_data();
+    
+    
+    return 0;
+}

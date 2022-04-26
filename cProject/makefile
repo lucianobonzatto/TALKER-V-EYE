@@ -18,7 +18,8 @@ CC=g++
 # Flags for compiler
 CC_FLAGS=-c           \
          -lrealsense2 \
-         -lopencv_core
+         -lopencv_core\
+         -lpigpio
 #         -ansi        \
 #         -W           \
 #         -Wall        \
@@ -34,7 +35,7 @@ all: objFolder $(PROJ_NAME)
 
 $(PROJ_NAME): $(OBJ)
 	@ echo 'Building $@'
-	g++ $^ -o $@ -lrealsense2
+	g++ $^ -o $@ -lrealsense2 -lpigpio
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
 

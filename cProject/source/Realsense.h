@@ -19,9 +19,9 @@ public:
 
     void read_img();
     float get_depth(int x, int y);
+    int get_color(int x, int y);
     int get_width();
     int get_height();
-    
     
 };
 
