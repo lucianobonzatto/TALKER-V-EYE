@@ -12,7 +12,7 @@ public:
     LidarLite();
     ~LidarLite();
 
-    int getDistance();
+    float getDistance();
 };
 
 #endif //UNTITLED_LIDARLITE_H

@@ -9,7 +9,7 @@ LidarLite::~LidarLite() {
 
 }
 
-int LidarLite::getDistance(){
+float LidarLite::getDistance(){
     sensor.takeRange();
-    return sensor.readDistance();
+    return ((float)sensor.readDistance()/100);
 }
