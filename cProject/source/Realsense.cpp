@@ -19,10 +19,10 @@ void Realsense::read_img(){
 void Realsense::print_img(){
     int width = frame.get_depth_frame().get_width();
     int height = frame.get_depth_frame().get_height();
-    
+
     for(int i=0; i<width; i+=10){
         for(int j=0; j<height; j+=10){
-            cout << (int)image.ptr(i,j)[0] << " ";
+            cout << (int) *image.ptr(i,j) << " ";
         }
         cout << endl;
     }
@@ -48,10 +48,6 @@ float Realsense::get_depth(int x, int y){
     return depth.get_distance(x, y);
 }
 
-int Realsense::get_color(int x, int y){
-    rs2::video_frame color = frame.get_color_frame();
-    color.get_data();
-    
-    
-    return 0;
+Mat* Realsense::get_img(){
+    return &image;
 }

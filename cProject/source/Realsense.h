@@ -12,7 +12,7 @@ class Realsense {
 private:
     rs2::pipeline pipe;
     rs2::frameset frame;
-    cv::Mat image;
+    Mat image;
     
 public:
     Realsense();
@@ -21,7 +21,7 @@ public:
     void read_img();
     void print_img();
     float get_depth(int x, int y);
-    int get_color(int x, int y);
+    Mat* get_img();
     int get_width();
     int get_height();
     
