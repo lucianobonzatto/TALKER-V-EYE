@@ -19,7 +19,8 @@ CC=g++
 CC_FLAGS=-c           \
          -lrealsense2 \
          -lopencv_core\
-         -lpigpio
+         -lpigpio     \
+         `pkg-config --cflags --libs opencv4`
 #         -ansi        \
 #         -W           \
 #         -Wall        \
@@ -35,7 +36,7 @@ all: objFolder $(PROJ_NAME)
 
 $(PROJ_NAME): $(OBJ)
 	@ echo 'Building $@'
-	g++ $^ -o $@ -lrealsense2 -lpigpio
+	g++ $^ -o $@ -lrealsense2 -lpigpio `pkg-config --cflags --libs opencv4`
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
 

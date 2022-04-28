@@ -4,8 +4,6 @@ Realsense::Realsense() {
     pipe.start();
     frame = pipe.wait_for_frames();
     
-    
-    
 }
 
 Realsense::~Realsense() {
@@ -14,6 +12,21 @@ Realsense::~Realsense() {
 
 void Realsense::read_img(){
     frame = pipe.wait_for_frames();
+    cv::Mat image_aux(Size(frame.get_depth_frame().get_width(), frame.get_depth_frame().get_height()), CV_8UC3, (void*)frame.get_data(), Mat::AUTO_STEP);
+    image = image_aux;
+}
+
+void Realsense::print_img(){
+    int width = frame.get_depth_frame().get_width();
+    int height = frame.get_depth_frame().get_height();
+    
+    for(int i=0; i<width; i+=10){
+        for(int j=0; j<height; j+=10){
+            cout << (int)image.ptr(i,j)[0] << " ";
+        }
+        cout << endl;
+    }
+    
 }
 
 int Realsense::get_width(){

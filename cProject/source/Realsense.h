@@ -2,22 +2,24 @@
 #define UNTITLED_REALSENSE_H
 
 #include <librealsense2/rs.hpp>
-//#include <opencv2/opencv.hpp> 
+#include <opencv2/opencv.hpp> 
 #include <iostream>
 
 using namespace std;
+using namespace cv;
 
 class Realsense {
 private:
     rs2::pipeline pipe;
     rs2::frameset frame;
-    
+    cv::Mat image;
     
 public:
     Realsense();
     ~Realsense();
 
     void read_img();
+    void print_img();
     float get_depth(int x, int y);
     int get_color(int x, int y);
     int get_width();
