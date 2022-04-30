@@ -3,7 +3,6 @@
 Realsense::Realsense() {
     pipe.start();
     frame = pipe.wait_for_frames();
-    
 }
 
 Realsense::~Realsense() {
@@ -11,9 +10,16 @@ Realsense::~Realsense() {
 }
 
 void Realsense::read_img(){
+    //read rs informations
     frame = pipe.wait_for_frames();
+    
+    //remap the image
     cv::Mat image_aux(Size(frame.get_depth_frame().get_width(), frame.get_depth_frame().get_height()), CV_8UC3, (void*)frame.get_data(), Mat::AUTO_STEP);
     image = image_aux;
+    
+    //remap the pointClound
+    rs2::pointcloud pointCloud;// = rs2::context().create_pointcloud();
+    points = pointCloud.calculate(frame.get_depth_frame());
 }
 
 void Realsense::print_img(){

@@ -12,6 +12,8 @@ class Realsense {
 private:
     rs2::pipeline pipe;
     rs2::frameset frame;
+//    rs2::pointcloud pointCloud;
+    rs2::points points;
     Mat image;
     
 public:
