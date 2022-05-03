@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TalkerVEye</string>
+    <string name="welcome_message">Bem vindo as configurações do Talker V-EYE</string>
+    <string name="ip">IP</string>
+    <string name="port">Port</string>
+    <string name="height">Altura (cm)</string>
+    <string name="length_arm">Comprimento braço (cm)</string>
+    <string name="tutorial_message">Clique aqui para ler o tutorial</string>
+    <string name="send">Enviar</string>
+    <string name="microcontroller_info">Informações para o microcontrolador</string>
+    <string name="user_info">Informações para sobre o usuário</string>
+    <string name="preference_configuration">com.camilo.talkerveye.CONFIGURATION</string>
+    <string name="preference_configuration_ip">ip</string>
+    <string name="preference_configuration_port">port</string>
+    <string name="preference_configuration_arm_length">armLength</string>
+    <string name="preference_configuration_height">height</string>
+
+</resources>
