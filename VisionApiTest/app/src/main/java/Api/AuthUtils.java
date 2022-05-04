@@ -18,7 +18,7 @@ import java.io.IOException;
  * @author kamir
  */
 public class AuthUtils {
-    private static void authExplicit(String jsonPath) throws IOException {
+    public static void authExplicit(String jsonPath) throws IOException {
         // You can specify a credential file by providing a path to GoogleCredentials.
         // Otherwise credentials are read from the GOOGLE_APPLICATION_CREDENTIALS environment variable.
         GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(jsonPath))
@@ -32,7 +32,7 @@ public class AuthUtils {
         }
     }
 
-    private static void authImplicit() {
+    public static void authImplicit() {
         // If you don't specify credentials when constructing the client, the client library will
         // look for credentials via the environment variable GOOGLE_APPLICATION_CREDENTIALS.
         Storage storage = StorageOptions.getDefaultInstance().getService();
