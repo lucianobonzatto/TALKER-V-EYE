@@ -1,15 +1,36 @@
 #include "Realsense.h"
 
 Realsense::Realsense() {
-    pipe.start();
-    frame = pipe.wait_for_frames();
+    tryConnection();
+    if(RSconnected == 1){
+        pipe.start();
+        frame = pipe.wait_for_frames();
+    }
 }
 
 Realsense::~Realsense() {
 
 }
 
+int Realsense::tryConnection(){
+    rs2::context ctx;
+    if (ctx.query_all_sensors().size() == 0){
+        cout << "No Realsense detected" << endl;
+        RSconnected = 0;
+        return 0;
+    }
+
+    cout << "Realsense conected" << endl;
+    RSconnected = 1;
+    return 1;
+}
+
 void Realsense::read_img(){
+    tryConnection();
+    if(RSconnected == 0){
+        return;
+    }
+
     //read rs informations
     frame = pipe.wait_for_frames();
     

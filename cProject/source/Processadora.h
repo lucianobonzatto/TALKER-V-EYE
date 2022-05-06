@@ -13,11 +13,11 @@ private:
     Realsense rs_sensor;
     LidarLite ll_sensor;
 
+    void printRSDepth();
+    void printLLDepth();
 public:
     Processadora();
     ~Processadora();
-
-
 };
 
 #endif //UNTITLED_PROCESSADORA_H

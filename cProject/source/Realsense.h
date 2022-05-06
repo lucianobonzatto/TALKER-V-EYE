@@ -4,12 +4,15 @@
 #include <librealsense2/rs.hpp>
 #include <opencv2/opencv.hpp> 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 using namespace cv;
 
 class Realsense {
 private:
+    int RSconnected;
+
     rs2::pipeline pipe;
     rs2::frameset frame;
 //    rs2::pointcloud pointCloud;
@@ -26,7 +29,7 @@ public:
     Mat* get_img();
     int get_width();
     int get_height();
-    
+    int tryConnection();
 };
 
 #endif //UNTITLED_REALSENSE_H
