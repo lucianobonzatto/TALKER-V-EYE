@@ -4,6 +4,7 @@ Processadora::Processadora() {
     int width, height, i_aux = -1, j_aux = -1;
     float men_dist, at_dist;
     while(1){
+        usleep(20000);
         rs_sensor.read_img();
         width = rs_sensor.get_width();
         height = rs_sensor.get_height();
@@ -20,8 +21,8 @@ Processadora::Processadora() {
             }
         }
         std::cout << "depth(" << i_aux << ")(" << j_aux << ")\t->\t" << men_dist << std::endl;
-        rs_sensor.print_img();
-//        std::cout << "\t\t" << "lidar\t->\t" << ll_sensor.getDistance() << std::endl;
+        //rs_sensor.print_img();
+        std::cout << "\t\t" << "lidar\t->\t" << ll_sensor.getDistance() << std::endl;
     }
 }
 

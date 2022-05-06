@@ -2,7 +2,7 @@
 
 LidarLite::LidarLite() {
     sensor.i2c_init();
-    sensor.configure(0);
+    sensor.configure(1);
 }
 
 LidarLite::~LidarLite() {
@@ -11,5 +11,8 @@ LidarLite::~LidarLite() {
 
 float LidarLite::getDistance(){
     sensor.takeRange();
-    return ((float)sensor.readDistance()/100);
+    while(1){
+        if(sensor.getBusyFlag() == 0x00)
+            return ((float)sensor.readDistance());
+    }
 }
