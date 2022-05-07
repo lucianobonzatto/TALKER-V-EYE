@@ -30,6 +30,7 @@ public:
     int get_width();
     int get_height();
     int tryConnection();
+    void print_points();
 };
 
 #endif //UNTITLED_REALSENSE_H

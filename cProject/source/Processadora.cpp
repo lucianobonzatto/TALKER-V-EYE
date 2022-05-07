@@ -1,10 +1,13 @@
 #include "Processadora.h"
 
 Processadora::Processadora() {
-//    while(1){
-//        usleep(20000);
+    while(1){
+        usleep(20000);
+        rs_sensor.read_img();
+        rs_sensor.print_points();
+        //printRSDepth();
         //rs_sensor.print_img();
-//    }
+    }
 }
 
 Processadora::~Processadora() {

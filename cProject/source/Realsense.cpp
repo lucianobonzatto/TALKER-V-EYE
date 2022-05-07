@@ -26,10 +26,10 @@ int Realsense::tryConnection(){
 }
 
 void Realsense::read_img(){
-    tryConnection();
-    if(RSconnected == 0){
-        return;
-    }
+//    tryConnection();
+//    if(RSconnected == 0){
+//        return;
+//    }
 
     //read rs informations
     frame = pipe.wait_for_frames();
@@ -54,6 +54,21 @@ void Realsense::print_img(){
         cout << endl;
     }
     
+}
+
+void Realsense::print_points(){
+    int min = 0;
+    const rs2::vertex* teste = points.get_vertices();
+
+    for(int i=0; i< points.size(); i++){
+        if(teste[min].x == 0){
+            min = i;
+        }
+        if(teste[i].x > teste[min].x){
+            min = i;
+        }
+    }
+    cout << teste[min].x << endl;
 }
 
 int Realsense::get_width(){
