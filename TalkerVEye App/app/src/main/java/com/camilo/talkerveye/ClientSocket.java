@@ -1,5 +1,8 @@
 package com.camilo.talkerveye;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,12 +15,16 @@ public class ClientSocket extends Thread{
     private String ip;
     private String heightPerson;
     private String armLengthPerson;
+    private String maxDepth;
+    private Activity activity;
 
-    public ClientSocket(String ip, String outPort, String heightPerson, String armLengthPerson) {
+    public ClientSocket(String ip, String outPort, String heightPerson, String armLengthPerson, String maxDepth, Activity activity) {
         this.ip = ip;
         this.outPort = Integer.parseInt(outPort);
         this.heightPerson= heightPerson;
         this.armLengthPerson = armLengthPerson;
+        this.maxDepth = maxDepth;
+        this.activity = activity;
     }
 
     @Override
@@ -39,12 +46,19 @@ public class ClientSocket extends Thread{
             //Envio no formato dado1,dado2
             String dataToSend = heightPerson +
                     "," +
-                    armLengthPerson;
+                    armLengthPerson +
+                    maxDepth;
             writer.write(dataToSend);
             writer.flush();
 
         } catch(IOException e) {
             e.printStackTrace();
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(activity, "Erro no socket: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">TalkerVEye</string>
+    <string name="welcome_message">Bem vindo as configurações do Talker V-EYE</string>
+    <string name="welcome_tutorial_message">Bem vindo ao tutorial do Talker V-EYE</string>
+    <string name="tutorial_communication_message">Tutorial para comunicação com Raspberry</string>
+    <string name="tutorial_use_message">Tutorial para utilização do Talker V-EYE</string>
+    <string name="ip">IP</string>
+    <string name="port">Port</string>
+    <string name="height">Altura (cm)</string>
+    <string name="length_arm">Comprimento braço (cm)</string>
+    <string name="max_depth">Profundidade máxima (m)</string>
+    <string name="tutorial_message">Clique aqui para ler o tutorial</string>
+    <string name="send">Enviar</string>
+    <string name="microcontroller_info">Informações para o microcontrolador</string>
+    <string name="user_info">Informações para sobre o usuário</string>
+    <string name="preference_configuration">com.camilo.talkerveye.CONFIGURATION</string>
+    <string name="preference_configuration_ip">ip</string>
+    <string name="preference_configuration_port">port</string>
+    <string name="preference_configuration_arm_length">armLength</string>
+    <string name="preference_configuration_height">height</string>
+    <string name="preference_configuration_max_depth">maxDepth</string>
+
+    <string name="tutorial_communication_first_message">Para enviar as configurações para o microcontrolador, é necessário que o
+            smartphone e o microcontrolador estejam conectados na mesma rede Wi-Fi</string>
+    <string name="tutorial_communication_second_message">É necessário informar o IP da rede que o microcontrolador está conectado,
+    além da porta para conexão, que por padrão é a porta 9098</string>
+    <string name="tutorial_communication_third_message">Também é preciso informar alguns parâmetros do usuário, que serão utilizados
+        para calibração da detecção de objetos. Se algum campo não for fornecido, o envio das configurações não será efetuada. Se
+        necessário, peça auxílio para uma pessoa ao informar os parâmetros do usuário</string>
+
+    <string name="tutorial_use_first_message">Para detecção dos objetos, cada motor na alça da mochila, representa um quadrante de onde
+        o obstáculo pode estar, quanto mais próximo o objeto estiver, a itensidade da vibração aumentará</string>
+    <string name="tutorial_use_second_message">Para validar a posição do objeto, utilize a pulseira, apontando para região
+        desejada, o motor na pulseira também vibrará mais quando se aproximar do obstáculo</string>
+    <string name="tutorial_use_third_message">Para identificação dos objetos, é necessário que seu smartphone esteja
+        conectado em rede Wi-Fi ou utilizando dados móveis</string>
+    <string name="tutorial_use_forth_message">A pulseira contém três botões, o mais a esquerda habilita o uso do sistema,
+        o botão central permite identificar o nome do objeto mais próximo e o último botão permite identificar
+        todos os objetos presentes na frente do usuário</string>
+</resources>

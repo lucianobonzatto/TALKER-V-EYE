@@ -3,6 +3,7 @@ package com.camilo.talkerveye.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText portEditText;
     private EditText heightEditText;
     private EditText armLengthEditText;
+    private EditText maxDepthEditText;
     private Button sendButton;
     private TextView tutorialTextView;
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         armLengthEditText = findViewById(R.id.armLengthEditText);
         sendButton = findViewById(R.id.sendButton);
         tutorialTextView = findViewById(R.id.tutorialTextView);
+        maxDepthEditText = findViewById(R.id.maxDepthEditText);
 
         sharedPreferences = getSharedPreferences(String.valueOf(R.string.preference_configuration), Activity.MODE_PRIVATE);
 
@@ -43,10 +46,12 @@ public class MainActivity extends AppCompatActivity {
             String port = portEditText.getText().toString();
             String height = heightEditText.getText().toString();
             String armLength = armLengthEditText.getText().toString();
+            String maxDepth = maxDepthEditText.getText().toString();
             if(!ip.isEmpty() &&
                     !port.isEmpty() &&
                     !height.isEmpty() &&
-                    !armLength.isEmpty()) {
+                    !armLength.isEmpty() &&
+                    !maxDepth.isEmpty()) {
 
                     if(sharedPreferences != null){
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -54,19 +59,26 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString(String.valueOf(R.string.preference_configuration_port), port);
                         editor.putString(String.valueOf(R.string.preference_configuration_height), height);
                         editor.putString(String.valueOf(R.string.preference_configuration_arm_length), armLength);
+                        editor.putString(String.valueOf(R.string.preference_configuration_max_depth),maxDepth);
                         editor.apply();
                     }
                     Toast.makeText(this, "teste: " + ip + port, Toast.LENGTH_SHORT).show();
                     ClientSocket clientSocket = new ClientSocket(ip,
                             port,
                             height,
-                            armLength);
+                            armLength,
+                            maxDepth,
+                            MainActivity.this);
                     clientSocket.start();
             } else {
                 Toast.makeText(this, "É necessário preencher todos os campos", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    public void changeToTutorialActivity(View v) {
+        startActivity(new Intent(MainActivity.this, TutorialActivity.class));
     }
 
     @Override
@@ -78,11 +90,13 @@ public class MainActivity extends AppCompatActivity {
             String port = sharedPreferences.getString(String.valueOf(R.string.preference_configuration_port), "");
             String height = sharedPreferences.getString(String.valueOf(R.string.preference_configuration_height), "");
             String armLength = sharedPreferences.getString(String.valueOf(R.string.preference_configuration_arm_length), "");
+            String maxDepth = sharedPreferences.getString(String.valueOf(R.string.preference_configuration_max_depth),"");
 
             ipEditText.setText(ip);
             portEditText.setText(port);
             heightEditText.setText(height);
             armLengthEditText.setText(armLength);
+            maxDepthEditText.setText(maxDepth);
         }
 
     }

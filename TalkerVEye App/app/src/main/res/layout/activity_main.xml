@@ -28,16 +28,15 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="313dp"
-        android:layout_height="297dp"
+        android:layout_width="323dp"
+        android:layout_height="340dp"
         android:orientation="vertical"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.578">
+        app:layout_constraintVertical_bias="0.259">
 
         <TextView
             android:id="@+id/textView2"
@@ -93,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="9090"
+                android:hint="9098"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -154,6 +153,31 @@
                 android:hint="63"
                 android:inputType="textPersonName" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_edit_text"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="264dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_weight="1"
+                android:text="@string/max_depth" />
+
+            <EditText
+                android:id="@+id/maxDepthEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="4"
+                android:inputType="textPersonName" />
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -161,7 +185,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <Button
         android:id="@+id/sendButton"
@@ -195,6 +219,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
+            android:onClick="changeToTutorialActivity"
             android:shadowColor="#FFFFFF"
             android:text="@string/tutorial_message"
             android:textColor="#8113FF"
