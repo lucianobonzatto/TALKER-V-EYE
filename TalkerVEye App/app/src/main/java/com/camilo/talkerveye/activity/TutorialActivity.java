@@ -1,11 +1,13 @@
 package com.camilo.talkerveye.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.camilo.talkerveye.R;
 
@@ -18,6 +20,9 @@ public class TutorialActivity extends AppCompatActivity {
     private ImageView volButtonSecondUse;
     private ImageView volButtonThirdUse;
     private ImageView volButtonForthUse;
+    private ConstraintLayout mainTutorialLayout;
+
+    private int countAudioPlayer = 1;
 
     private MediaPlayer mediaPlayer;
     @Override
@@ -34,6 +39,36 @@ public class TutorialActivity extends AppCompatActivity {
         volButtonThirdUse = findViewById(R.id.volButtonThirdUse);
         volButtonForthUse = findViewById(R.id.volButtonForthUse);
 
+        mainTutorialLayout = findViewById(R.id.mainTutorialLayout);
+
+        //This part is for run the audio when click in any part of screen
+        mainTutorialLayout.setOnClickListener(view -> {
+            switch (countAudioPlayer) {
+                case 1:
+                    executeFirstComm(volButtonFirstComm.getRootView());
+                    break;
+                case 2:
+                    executeSecondComm(volButtonSecondComm.getRootView());
+                    break;
+                case 3:
+                    executeThirdComm(volButtonThirdComm.getRootView());
+                    break;
+                case 4:
+                    executeFirstUse(volButtonFirstUse.getRootView());
+                    break;
+                case 5:
+                    executeSecondUse(volButtonSecondUse.getRootView());
+                    break;
+                case 6:
+                    executeThirdUse(volButtonThirdUse.getRootView());
+                    break;
+                case 7:
+                    executeForthUse(volButtonForthUse.getRootView());
+                    countAudioPlayer = 0; //Ao sair do switch/case, o countAudioPlayer++ irá volta-lo para 1
+                    break;
+            }
+            countAudioPlayer++;
+        });
 
     }
 
