@@ -23,7 +23,7 @@ int LidarLite::tryConnection(){
 }
 
 float LidarLite::getDistance(){
-    tryConnection();
+//    tryConnection();
     if(LLconnected == 0){
         return -1;
     }

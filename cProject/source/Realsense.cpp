@@ -32,7 +32,8 @@ void Realsense::read_img(){
 //    }
 
     //read rs informations
-    frame = pipe.wait_for_frames();
+//    frame = pipe.wait_for_frames();
+    pipe.poll_for_frames(&frame);
     
     //remap the image
     cv::Mat image_aux(Size(frame.get_depth_frame().get_width(), frame.get_depth_frame().get_height()), CV_8UC3, (void*)frame.get_data(), Mat::AUTO_STEP);

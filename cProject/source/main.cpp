@@ -3,6 +3,12 @@
 
 int main() {
     std::cout << "Hello" << std::endl;
+    if(gpioInitialise() < 0){
+        std::cout << "Erro ao inicializar PIGPIO." << std::endl;
+        return 0;
+    }
+
+
     Processadora teste;
 
     std::cout << "Bie" << std::endl;
