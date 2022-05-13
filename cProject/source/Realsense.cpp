@@ -94,3 +94,7 @@ float Realsense::get_depth(int x, int y){
 Mat* Realsense::get_img(){
     return &image;
 }
+
+const rs2::points* Realsense::getPoints(){
+    return &points;
+}

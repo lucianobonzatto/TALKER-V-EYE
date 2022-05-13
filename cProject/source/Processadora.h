@@ -22,6 +22,12 @@ private:
     void printRSDepth();
     void printLLDepth();
     void testeMotor();
+    void detectaObstaculo();
+        float alturaRealsense;
+        std::pair<int,int> convertePontoPixel(float x, float y, float z);
+        float calculaDistancia(float x, float y, float z);
+        int convertePixelQuadrante(std::pair<int,int> pixel);
+        int converteDistanciaIntensidade(float distancia);
 public:
     Processadora();
     ~Processadora();

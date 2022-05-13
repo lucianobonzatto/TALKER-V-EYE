@@ -102,3 +102,95 @@ void Processadora::testeMotor() {
     }
 //    std::cout << "\tintensidade\t->\t" << intensidade << "\tmotor\t->\t" << msel << std::endl;
 }
+
+void Processadora::detectaObstaculo(){
+    rs2::points* pontos = rs_sensor.getPoints();
+    auto vertices = pontos.get_vertices();
+    float distanciaMinima = 99999999999;  
+    int indiceMenorPonto = 0;
+
+    /*Primeira varredura na nuvem de pontos*/
+    for (int i = 0; i < points.size(); i++)
+    {
+        
+        float xi = vertices[i].x;
+        float yi = vertices[i].y;
+        float zi = vertices[i].z;
+        float distanciaAtual = calculaDistancia(xi, yi, zi);
+        if(distanciaAtual < distanciaMinima){
+            if (abs(zi - alturaRealsense) > INTERV_CHAO)
+            {
+                indiceMenorPonto = i;
+                distanciaMinima = distanciaAtual;
+            }
+        }
+    }
+
+    float n_pontos_obtaculo_quadrante_1 = 0;
+    float n_pontos_obtaculo_quadrante_2 = 0;
+    float n_pontos_obtaculo_quadrante_3 = 0;
+    float n_pontos_obtaculo_quadrante_4 = 0;
+
+    /*Segunda varredura na nuvem de pontos*/
+    for (int i = 0; i < points.size(); i++)
+    {
+        float xi = vertices[i].x;
+        float yi = vertices[i].y;
+        float zi = vertices[i].z;
+        float distanciaAtual = calculaDistancia(xi, yi, zi);
+
+        if(abs(distanciaAtual - distanciaMinima) < INTERV_OBSTACULO){   //Identifica pontos proximos ao ponto mais proximo do usuario
+            std::pair<int,int> pixel = convertePontoPixel(xi,yi,zi);
+            int quadrante convertePixelQuadrante(pixel);
+
+            switch(quadrante){
+                case 1:
+                    n_pontos_obtaculo_quadrante_1 ++;
+                    break;
+                case 2:
+                    n_pontos_obtaculo_quadrante_2 ++;
+                    break;
+                case 3:
+                    n_pontos_obtaculo_quadrante_3 ++;
+                    break;
+                case 4:
+                    n_pontos_obtaculo_quadrante_4 ++;
+                    break;
+            }
+        }
+
+        int intensidade = converteDistanciaIntensidade(distanciaMinima);
+
+        if(n_pontos_obtaculo_quadrante_1 > MIN_PONTOS_QUADRANTE){
+            m1.setIntesity(intensidade);
+        }
+        else if(n_pontos_obtaculo_quadrante_2 > MIN_PONTOS_QUADRANTE){
+            m2.setIntesity(intensidade);
+        }
+        else if(n_pontos_obtaculo_quadrante_3 > MIN_PONTOS_QUADRANTE){
+            m3.setIntesity(intensidade);
+        }
+        else if(n_pontos_obtaculo_quadrante_4 > MIN_PONTOS_QUADRANTE){
+            m4.setIntesity(intensidade);
+        }
+    }
+}
+
+std::pair<int,int> Processadora::convertePontoPixel(float x, float y, float z){
+    std::pair<int,int> pixel;
+    pixel.first = 0;
+    pixel.second = 0;
+    return pixel;
+}
+
+float Processadora::calculaDistancia(float x, float y, float z){
+    return sqrt(x*x + y*y + z*z);
+}
+
+int Processadora::convertePixelQuadrante(std::pair<int,int> pixel){
+    return 0;
+}
+
+int Processadora::converteDistanciaIntensidade(float distancia){
+    return 0;
+}
