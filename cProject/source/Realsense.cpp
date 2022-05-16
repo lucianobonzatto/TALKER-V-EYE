@@ -95,6 +95,6 @@ Mat* Realsense::get_img(){
     return &image;
 }
 
-const rs2::points* Realsense::getPoints(){
+rs2::points* Realsense::getPoints(){
     return &points;
 }

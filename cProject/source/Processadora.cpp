@@ -13,12 +13,13 @@ Processadora::Processadora() {
 
         std::cout << endl << "============================================================" << endl;
 //        testeMotor();
-        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
+//        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
 
         rs_sensor.read_img();
-        ////rs_sensor.print_points();
-        printRSDepth();
-        //rs_sensor.print_img();
+        detectaObstaculo();
+//        rs_sensor.print_points();
+//        printRSDepth();
+//        rs_sensor.print_img();
     }
 }
 
@@ -105,14 +106,13 @@ void Processadora::testeMotor() {
 
 void Processadora::detectaObstaculo(){
     rs2::points* pontos = rs_sensor.getPoints();
-    auto vertices = pontos.get_vertices();
-    float distanciaMinima = 99999999999;  
+    auto vertices = pontos->get_vertices();
+    float distanciaMinima = 99999999999;
     int indiceMenorPonto = 0;
 
     /*Primeira varredura na nuvem de pontos*/
-    for (int i = 0; i < points.size(); i++)
+    for (int i = 0; i < pontos->size(); i++)
     {
-        
         float xi = vertices[i].x;
         float yi = vertices[i].y;
         float zi = vertices[i].z;
@@ -132,7 +132,7 @@ void Processadora::detectaObstaculo(){
     float n_pontos_obtaculo_quadrante_4 = 0;
 
     /*Segunda varredura na nuvem de pontos*/
-    for (int i = 0; i < points.size(); i++)
+    for (int i = 0; i < pontos->size(); i++)
     {
         float xi = vertices[i].x;
         float yi = vertices[i].y;
@@ -140,8 +140,7 @@ void Processadora::detectaObstaculo(){
         float distanciaAtual = calculaDistancia(xi, yi, zi);
 
         if(abs(distanciaAtual - distanciaMinima) < INTERV_OBSTACULO){   //Identifica pontos proximos ao ponto mais proximo do usuario
-            std::pair<int,int> pixel = convertePontoPixel(xi,yi,zi);
-            int quadrante convertePixelQuadrante(pixel);
+            int quadrante = convertePontoQuadrante(xi, yi);
 
             switch(quadrante){
                 case 1:
@@ -158,25 +157,32 @@ void Processadora::detectaObstaculo(){
                     break;
             }
         }
-
-        int intensidade = converteDistanciaIntensidade(distanciaMinima);
-
-        if(n_pontos_obtaculo_quadrante_1 > MIN_PONTOS_QUADRANTE){
-            m1.setIntesity(intensidade);
-        }
-        else if(n_pontos_obtaculo_quadrante_2 > MIN_PONTOS_QUADRANTE){
-            m2.setIntesity(intensidade);
-        }
-        else if(n_pontos_obtaculo_quadrante_3 > MIN_PONTOS_QUADRANTE){
-            m3.setIntesity(intensidade);
-        }
-        else if(n_pontos_obtaculo_quadrante_4 > MIN_PONTOS_QUADRANTE){
-            m4.setIntesity(intensidade);
-        }
     }
+
+    int intensidade = converteDistanciaIntensidade(distanciaMinima);
+    if(n_pontos_obtaculo_quadrante_1 > MIN_PONTOS_QUADRANTE){
+        m1.setIntensity(intensidade);
+    }
+    else if(n_pontos_obtaculo_quadrante_2 > MIN_PONTOS_QUADRANTE){
+        m2.setIntensity(intensidade);
+    }
+    else if(n_pontos_obtaculo_quadrante_3 > MIN_PONTOS_QUADRANTE){
+        m3.setIntensity(intensidade);
+    }
+    else if(n_pontos_obtaculo_quadrante_4 > MIN_PONTOS_QUADRANTE){
+        m4.setIntensity(intensidade);
+    }
+
+    std::cout << "\tdist - " << distanciaMinima << std::endl;
+    std::cout << "\tQ1 - " << n_pontos_obtaculo_quadrante_1 << std::endl;
+    std::cout << "\tQ2 -" << n_pontos_obtaculo_quadrante_2 << std::endl;
+    std::cout << "\tQ3 -" << n_pontos_obtaculo_quadrante_3 << std::endl;
+    std::cout << "\tQ4 -" << n_pontos_obtaculo_quadrante_4 << std::endl;
+
 }
 
 std::pair<int,int> Processadora::convertePontoPixel(float x, float y, float z){
+    //nao esta feita
     std::pair<int,int> pixel;
     pixel.first = 0;
     pixel.second = 0;
@@ -188,9 +194,41 @@ float Processadora::calculaDistancia(float x, float y, float z){
 }
 
 int Processadora::convertePixelQuadrante(std::pair<int,int> pixel){
-    return 0;
+    int halfWidth = rs_sensor.get_width()/2;
+    int halfHeight = rs_sensor.get_height()/2;
+
+    if(pixel.first > halfWidth && pixel.second > halfHeight){
+        return 1;
+    }
+    else if(pixel.first > halfWidth && pixel.second < halfHeight){
+        return 2;
+    }
+    else if(pixel.first < halfWidth && pixel.second > halfHeight){
+        return 3;
+    }
+    else if(pixel.first < halfWidth && pixel.second < halfHeight){
+        return 4;
+    }
+    return -1;
+}
+
+int Processadora::convertePontoQuadrante(float x, float y){
+    if(x > 0 && y > 0){
+        return 1;
+    }
+    else if(x < 0 && y > 0){
+        return 2;
+    }
+    else if(x < 0 && y < 0){
+        return 3;
+    }
+    else if(x > 0 && y < 0){
+        return 4;
+    }
+    return -1;
 }
 
 int Processadora::converteDistanciaIntensidade(float distancia){
+    //nao esta feita
     return 0;
 }

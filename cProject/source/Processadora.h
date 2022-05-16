@@ -7,6 +7,11 @@
 #include <iostream>
 #include <unistd.h>
 
+#define INTERV_CHAO 0.10
+#define INTERV_ANALISE 20
+#define INTERV_OBSTACULO 0.20
+#define MIN_PONTOS_QUADRANTE 1
+
 using namespace std;
 
 class Processadora {
@@ -23,11 +28,13 @@ private:
     void printLLDepth();
     void testeMotor();
     void detectaObstaculo();
-        float alturaRealsense;
-        std::pair<int,int> convertePontoPixel(float x, float y, float z);
-        float calculaDistancia(float x, float y, float z);
-        int convertePixelQuadrante(std::pair<int,int> pixel);
-        int converteDistanciaIntensidade(float distancia);
+    float alturaRealsense;
+    std::pair<int,int> convertePontoPixel(float x, float y, float z);
+    int convertePontoQuadrante(float x, float y);
+    float calculaDistancia(float x, float y, float z);
+    int convertePixelQuadrante(std::pair<int,int> pixel);
+    int converteDistanciaIntensidade(float distancia);
+
 public:
     Processadora();
     ~Processadora();

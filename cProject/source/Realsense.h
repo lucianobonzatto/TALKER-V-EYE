@@ -31,7 +31,7 @@ public:
     int get_height();
     int tryConnection();
     void print_points();
-    const rs2::points* getPoints();
+    rs2::points* getPoints();
 };
 
 #endif //UNTITLED_REALSENSE_H
