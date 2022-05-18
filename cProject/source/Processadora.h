@@ -28,7 +28,7 @@ private:
     MotorVib m4;
     MotorVib mp;
     SocketClient sockClient;
-    //SocketServer sockServer;
+    SocketServer sockServer;
 
     void printRSDepth();
     void printLLDepth();
