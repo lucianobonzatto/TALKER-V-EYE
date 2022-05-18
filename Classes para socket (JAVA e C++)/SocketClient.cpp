@@ -25,6 +25,9 @@ void *send_message(void* attr) {
     if(sendRes == -1) {
         cout << "Could not send to server! \n";
     }
+
+    printf("close socket\n");
+    close(sock);
 }
 
 int main() {
@@ -59,7 +62,7 @@ int main() {
     printf("connected in server\n");
 
     //Lendo o arquivo
-    ifstream ifs("center_city.JPG", ios::in | ios::binary); // input file
+    /*ifstream ifs("center_city.JPG", ios::in | ios::binary); // input file
     ostringstream oss; // output to string
 
     int len;
@@ -68,21 +71,19 @@ int main() {
     {
         oss.write(buf, len);
     }
-    printf("finish reading file\n");
+    printf("finish reading file\n"); 
 
-    string data = oss.str(); // get string data out of stream
+    string data = oss.str(); // get string data out of stream */
 
     pthread_attr_init (&attr) ;
     pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE);
-    long status = pthread_create (&thread, &attr, send_message, (void*)"") ;
+
+    long status = pthread_create (&thread, &attr, send_message, (void*) data) ;
      if (status) {
         perror ("pthread_create") ;
         exit (1) ;
      }
 
-    printf("close socket\n");
-    close(sock);
-    
     return 0;
 }
 
