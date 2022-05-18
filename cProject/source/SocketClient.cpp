@@ -34,7 +34,10 @@ void SocketClient::init() {
 }
 
 void* SocketClient::sendMessage(void* attr) {
-    int sendRes = send(this.sockClient, (string) attr.c_str(), (string) attr.size() + 1, 0);
+    vector<uchar> jpegData = (std::vector<uchar>) attr;
+    string str(jpegData.begin(), jpegData.end());
+
+    int sendRes = send(this.sockClient, str.c_str(), str.size() + 1, 0);
     if(sendRes == -1) {
         cout << "Could not send to server! \n";
     }
@@ -46,9 +49,14 @@ void* SocketClient::sendImageForApi(Mat* img) { //Vai ter os dados da imagem da 
     //Init attr for thread
     pthread_attr_init (&attr) ;
     pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE);
+
+    std::vector<uchar> buff;//buffer for coding
+    std::vector<int> param(2);
+    param[0] = cv::IMWRITE_JPEG_QUALITY;
+    param[1] = 80;//default(95) 0-100
+    cv::imencode(".jpg", img, buff, param);
    
-    //Talvez fazer a tardução do parametro de sendImageForApi para string (data)
-    long status = pthread_create (&thread, &attr, sendMessage, (void*) data) ;
+    long status = pthread_create (&thread, &attr, sendMessage, (void*) buff) ;
      if (status) {
         perror ("pthread_create") ;
         exit (1) ;
