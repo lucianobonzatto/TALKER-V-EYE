@@ -11,6 +11,8 @@
 #define INTERV_ANALISE 20
 #define INTERV_OBSTACULO 0.20
 #define MIN_PONTOS_QUADRANTE 1
+#define DIST_MAX 3
+#define DIST_MIN 1
 
 using namespace std;
 

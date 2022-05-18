@@ -229,6 +229,10 @@ int Processadora::convertePontoQuadrante(float x, float y){
 }
 
 int Processadora::converteDistanciaIntensidade(float distancia){
-    //nao esta feita
-    return 0;
+    /*Mapeia os valores de distância no invervalo 0-255 (PWM)*/
+    float coef_ang = -255/(DIST_MAX - DIST_MIN);
+    int intensidade = coef_ang*(distancia - DIST_MIN) + 255;  //Equacao fundamental da reta.
+    if(intensidade > 255)
+        intensidade = 255;
+    return intensidade;
 }
