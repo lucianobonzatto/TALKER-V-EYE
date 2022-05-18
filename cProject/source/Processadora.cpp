@@ -16,7 +16,13 @@ Processadora::Processadora() {
 //        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
 
         rs_sensor.read_img();
+
+        //cv::Mat* img rs_sensor.get_img();
+        //sockClient.sendImageForApi(img);
+
         detectaObstaculo();
+
+        
 //        rs_sensor.print_points();
 //        printRSDepth();
 //        rs_sensor.print_img();
