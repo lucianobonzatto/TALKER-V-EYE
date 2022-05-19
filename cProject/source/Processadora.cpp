@@ -11,7 +11,7 @@ Processadora::Processadora() {
     while(1){
 //        usleep(20000);
 
-        std::cout << endl << "============================================================" << endl;
+//        std::cout << endl << "============================================================" << endl;
 //        testeMotor();
 //        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
 
@@ -20,7 +20,7 @@ Processadora::Processadora() {
         //cv::Mat* img rs_sensor.get_img();
         //sockClient.sendImageForApi(img);
 
-        detectaObstaculo();
+//        detectaObstaculo();
 
         
 //        rs_sensor.print_points();

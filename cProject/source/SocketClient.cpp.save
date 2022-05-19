@@ -33,23 +33,18 @@ void SocketClient::init() {
     printf("connected in server\n");
 }
 
-static void* sendMessage(void *attr) {
+void *SocketClient::sendMessage(void *attr) {
 
-    //uchar *charBuf = (uchar*)attr;
-    /* create a vector by copying out the contents of charBuf */
-    //vector<uchar> jpegData(charBuf, charBuf + len);
 
-    SocketClient* socketClient = static_cast<SocketClient*>(attr);
+   vector<uchar>& jpegData = reinterpret_cast<vector<uchar>>(attr);
+    string str(jpegData.begin(), jpegData.end());
 
-    
-    string str(socketClient->getBufferImg().begin(), socketClient->getBufferImg().end());
-
-    int sendRes = send(socketClient->getSockClient(), str.c_str(), str.size() + 1, 0);
+    int sendRes = send(sockClient, str.c_str(), str.size() + 1, 0);
     if(sendRes == -1) {
         cout << "Could not send to server! \n";
     }
     printf("close socket\n");
-    close(socketClient->getSockClient());
+    close(sockClient);
     return 0;
 }
 
@@ -58,13 +53,13 @@ void SocketClient::sendImageForApi(cv::Mat* img) { //Vai ter os dados da imagem 
     pthread_attr_init (&attr) ;
     pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE);
 
-   // std::vector<uchar> buff;//buffer for img
+    std::vector<uchar> buff;//buffer for coding
     std::vector<int> param(2);
     param[0] = cv::IMWRITE_JPEG_QUALITY;
     param[1] = 80;//default(95) 0-100
-    cv::imencode(".jpg", *img, bufferImg, param);
+    cv::imencode(".jpg", *img, buff, param);
 
-    long status = pthread_create (&thread, &attr, sendMessage,(void*) this);
+    long status = pthread_create (&thread, &attr, sendMessage, static_cast<void*>(&buff[0]));
     if (status) {
         perror ("pthread_create") ;
         exit (1) ;
@@ -74,18 +69,3 @@ void SocketClient::sendImageForApi(cv::Mat* img) { //Vai ter os dados da imagem 
     pthread_exit (NULL) ;
 }
 
-void SocketClient::setBufferImg(vector<uchar> bufferImgAttr){
-    bufferImg = bufferImgAttr;
-}
-
-void SocketClient::setSockClient(int sockClientAttr){
-    sockClient = sockClientAttr;
-}
-
-int SocketClient::getSockClient(){
-    return sockClient;
-}
-
-vector<uchar> SocketClient::getBufferImg(){
-    return bufferImg;
-}

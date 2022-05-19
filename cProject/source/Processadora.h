@@ -27,7 +27,7 @@ private:
     MotorVib m3;
     MotorVib m4;
     MotorVib mp;
-    SocketClient sockClient;
+   // SocketClient sockClient; depois tirar a funçao connect do init e deixar a função connect na sendImageForApi
     SocketServer sockServer;
 
     void printRSDepth();

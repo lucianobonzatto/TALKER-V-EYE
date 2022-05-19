@@ -1,5 +1,5 @@
-#ifndef UNTITLED_SOCKET_SERVER_H
-#define UNTITLED_SOCKET_SERVER_H
+#ifndef UNTITLED_SOCKET_CLIENT_H
+#define UNTITLED_SOCKET_CLIENT_H
 
 //for socket TCP/IP
 #include <iostream>
@@ -17,27 +17,26 @@
 
 //for thread
 #include <pthread.h>
+#include <opencv2/opencv.hpp> 
+
 using namespace std;
 
-class SocketServer {
+class SocketClient {
 private:
-    int serverSocket;
-    int clientSocket;
-    int addrlen;
-    struct sockaddr_in address;
     int port;
-    int opt;
+    string ipAdrress;
+    sockaddr_in hint;
     pthread_t thread;
     pthread_attr_t attr;
+    string data;
+    int sockClient;private:
+    static void *sendMessage(void *attr);
 
 public:
-    SocketServer();
-    ~SocketServer();
+    SocketClient();
+    ~SocketClient();
     void init();
-    int getServerSocket();
-    int getClientSocket();
-    int getAddrlen();
-    struct sockaddr_in getAddress();
+    void sendImageForApi(cv::Mat* img);
 };
 
-#endif //UNTITLED_SOCKET_SERVER_H
+#endif //UNTITLED_SOCKET_CLIENT_H

@@ -30,15 +30,17 @@ private:
     pthread_attr_t attr;
     string data;
     int sockClient;
-
-private:
-    void *sendMessage(void* attr);
+    vector<uchar> bufferImg;
 
 public:
     SocketClient();
     ~SocketClient();
     void init();
-    void sendImageForApi(Mat* img);
+    void sendImageForApi(cv::Mat* img);
+    void setBufferImg(vector<uchar> bufferImgAttr);
+    void setSockClient(int sockClientAttr);
+    int getSockClient();
+    vector<uchar> getBufferImg();
 };
 
 #endif //UNTITLED_SOCKET_CLIENT_H
