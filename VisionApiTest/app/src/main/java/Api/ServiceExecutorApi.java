@@ -33,9 +33,8 @@ public class ServiceExecutorApi implements Runnable {
     public void run() {
         try {
             List<ApiImage> imagesList = new ServiceVisionApi().detectionLocalizedObjects();
-            System.out.println("BETWEEN API \n\n\n ");
             String pathMp3File = new ServiceTextToSpeechApi(imagesList).generateAudioFromText();
-
+            System.out.println(pathMp3File);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

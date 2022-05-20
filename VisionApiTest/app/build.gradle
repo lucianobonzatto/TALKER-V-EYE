@@ -5,12 +5,18 @@
  * For more details take a look at the 'Building Java & JVM projects' chapter in the Gradle
  * User Manual available at https://docs.gradle.org/7.3/userguide/building_java_projects.html
  */
-
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'VisionApiTest.App'
+        )
+    }
+}
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
