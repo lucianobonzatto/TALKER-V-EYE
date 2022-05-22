@@ -17,6 +17,9 @@
 
 //for thread
 #include <pthread.h>
+
+#define PORT 9098
+
 using namespace std;
 
 class SocketServer {

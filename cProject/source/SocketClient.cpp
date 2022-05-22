@@ -18,29 +18,31 @@ void SocketClient::init() {
 
     //Configure socket
     port = 9090; //port created in Java side
-    ipAdrress = "192.168.1.74"; //modificar de acordo com a rede
+    ipAdrress = "127.0.0.1"; //modificar de acordo com a rede
 
     hint.sin_family = AF_INET;
-    hint.sin_port = htons(port);
+    hint.sin_port = htons(PORT_CLIENT);
     inet_pton(AF_INET, ipAdrress.c_str(), &hint.sin_addr);
 
-    //Connect socket with server
-    int connectRes = connect(sockClient, (sockaddr*)&hint, sizeof(hint));
-    if(connectRes == -1){
-        cerr << "Can't connect in server!";
-        return;
-    }
-    printf("connected in server\n");
 }
 
 static void* sendMessage(void *attr) {
-
+    cout <<"send message init" << endl;
     //uchar *charBuf = (uchar*)attr;
     /* create a vector by copying out the contents of charBuf */
     //vector<uchar> jpegData(charBuf, charBuf + len);
 
     SocketClient* socketClient = static_cast<SocketClient*>(attr);
+    sockaddr_in hint = socketClient->getHint();
 
+    //Connect socket with server
+    int connectRes = connect(socketClient->getSockClient(), (sockaddr*)&hint, sizeof(hint));
+    if(connectRes == -1) {
+       cerr << "Can't connect in server!" <<endl;
+       return 0;
+    }
+    cout << "connected in server!" << endl;
+    vector<uchar> buff = socketClient->getBufferImg();
     
     string str(socketClient->getBufferImg().begin(), socketClient->getBufferImg().end());
 
@@ -54,6 +56,12 @@ static void* sendMessage(void *attr) {
 }
 
 void SocketClient::sendImageForApi(cv::Mat* img) { //Vai ter os dados da imagem da realsense
+    cout<< "Init send image for api" << endl;
+
+   cv::imwrite("some.jpg", *img);
+   cv::imshow("some", *img);
+   cv::waitKey();
+
     //Init attr for thread
     pthread_attr_init (&attr) ;
     pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE);
@@ -64,6 +72,7 @@ void SocketClient::sendImageForApi(cv::Mat* img) { //Vai ter os dados da imagem 
     param[1] = 80;//default(95) 0-100
     cv::imencode(".jpg", *img, bufferImg, param);
 
+    cout <<"finish image decode" << endl;
     long status = pthread_create (&thread, &attr, sendMessage,(void*) this);
     if (status) {
         perror ("pthread_create") ;
@@ -88,4 +97,8 @@ int SocketClient::getSockClient(){
 
 vector<uchar> SocketClient::getBufferImg(){
     return bufferImg;
+}
+
+sockaddr_in SocketClient::getHint(){
+   return hint;
 }

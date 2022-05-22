@@ -15,7 +15,7 @@ static void* receive_message(void *arg_thread) {
         char client_message[2000];
         int client_socket;
         struct sockaddr_in addr = socketServer->getAddress();
-        cout <<"port is: " << addr.sin_port << endl;
+
         int addrlen = socketServer->getAddrlen();
         if((client_socket = accept(socketServer->getServerSocket(), (struct sockaddr*)&addr, (socklen_t*)&addrlen)) <0) {
             perror("Error in accept function");
@@ -57,8 +57,8 @@ void SocketServer::init() {
     }
 
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = port;
+    address.sin_addr.s_addr = inet_addr("192.168.0.27");
+    address.sin_port = htons(PORT);
 
     if(bind(serverSocket, (struct sockaddr*)&address, sizeof(address))<0) {
         perror("bind failed");

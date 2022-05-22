@@ -3,11 +3,7 @@
  */
 package VisionApiTest;
 
-import Api.ServiceExecutorApi;
 import Service.ServerSocketForImage;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 
 public class App {
 
@@ -17,9 +13,6 @@ public class App {
         // the "close" method on the client to safely clean up any remaining background resources.
 
         new ServerSocketForImage().start();
-
-        //ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
-        //singleExecutor.execute(new ServiceExecutorApi());
-      
+     
     }
 }

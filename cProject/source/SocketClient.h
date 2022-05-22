@@ -19,6 +19,8 @@
 #include <pthread.h>
 #include <opencv2/opencv.hpp> 
 
+#define PORT_CLIENT 9090
+
 using namespace std;
 
 class SocketClient {
@@ -40,6 +42,7 @@ public:
     void setBufferImg(vector<uchar> bufferImgAttr);
     void setSockClient(int sockClientAttr);
     int getSockClient();
+    sockaddr_in getHint();
     vector<uchar> getBufferImg();
 };
 

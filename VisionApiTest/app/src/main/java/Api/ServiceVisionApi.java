@@ -33,6 +33,10 @@ public class ServiceVisionApi {
         initDetectionLocalizedObjects();
     }
 
+    public ServiceVisionApi(byte[] imageData) throws IOException {
+        initDetectionLocalizedObjects(imageData);
+    }
+
     public List<ApiImage> detectionLocalizedObjects() {
         try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
@@ -70,11 +74,29 @@ public class ServiceVisionApi {
         // the "close" method on the client to safely clean up any remaining background resources.
 
         // The path to the image file to annotate
-        //String fileName = "./resources/wakeupcat.jpg";
-        String fileName = "C:\\Users\\kamir\\Documents\\NetBeansProjects\\VisionApiTest\\app\\src\\main\\resources\\wakeupcat.jpg";
+        String fileName = "/home/lukn23/TALKER-V-EYE/VisionApiTest/app/src/main/resources/wakeupcat.jpg";
+        // String fileName = "C:\\Users\\kamir\\Documents\\NetBeansProjects\\VisionApiTest\\app\\src\\main\\resources\\wakeupcat.jpg";
         // Reads the image file into memory
         Path path = Paths.get(fileName);
         byte[] data = Files.readAllBytes(path);
+        ByteString imgBytes = ByteString.copyFrom(data);
+
+        // Builds the image annotation request
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION).build();
+        AnnotateImageRequest request
+                = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+    }
+
+    private void initDetectionLocalizedObjects(byte[] imageData) throws IOException {
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+
+        // The path to the image file to annotate
+        byte[] data = imageData;
         ByteString imgBytes = ByteString.copyFrom(data);
 
         // Builds the image annotation request

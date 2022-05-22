@@ -4,12 +4,11 @@
  */
 package Service;
 
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import Api.ServiceExecutorApi;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 /**
  *
  * @author kamir
@@ -18,9 +17,6 @@ public class ServerSocketForImage extends Thread { //Server Socket
 
     private String ip;
     private int port = 9090;
-
-    private OutputStreamWriter writer = null;
-    private InputStreamReader reader = null;
 
     public ServerSocketForImage() {
        
@@ -33,17 +29,8 @@ public class ServerSocketForImage extends Thread { //Server Socket
                 Socket socket = server.accept();
                 System.out.println("Message received on port " + port);
 
-                this.writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
-                this.reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
-
-                StringBuffer segment = new StringBuffer();
-                int temp;
-                while ((temp = reader.read()) != -1) {
-                    segment.append(temp);
-                    segment.append(",");
-                }
-                segment.deleteCharAt(segment.length() - 1);
-                System.out.println(segment.toString());
+                ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
+                singleExecutor.execute(new ServiceExecutorApi(socket));
             }
         } catch (Exception e) {
             e.printStackTrace();
