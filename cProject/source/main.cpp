@@ -12,5 +12,6 @@ int main() {
     Processadora teste;
 
     std::cout << "Bie" << std::endl;
+    gpioTerminate();
     return 0;
 }

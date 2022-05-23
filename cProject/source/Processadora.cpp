@@ -16,9 +16,11 @@ Processadora::Processadora() {
 //        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
 
         rs_sensor.read_img();
-
         cv::Mat* img =  rs_sensor.get_img();
-        sockClient.sendImageForApi(img);
+//        imshow("Display window", *img);
+//        int k = waitKey(0);
+
+//        sockClient.sendImageForApi(img);
 
 //        detectaObstaculo();
 
@@ -37,8 +39,8 @@ void Processadora::printRSDepth() {
     float men_dist, at_dist;
 
 //    rs_sensor.read_img();
-    width = rs_sensor.get_width();
-    height = rs_sensor.get_height();
+    width = rs_sensor.get_depth_width();
+    height = rs_sensor.get_depth_height();
     men_dist = 10000;
 
     for(int i=0; i<width; i+=10){
@@ -106,7 +108,7 @@ void Processadora::testeMotor() {
         break;
 
     }
-//    std::cout << "\tintensidade\t->\t" << intensidade << "\tmotor\t->\t" << msel << std::endl;
+    std::cout << "\tintensidade\t->\t" << intensidade << "\tmotor\t->\t" << msel << std::endl;
 }
 
 void Processadora::detectaObstaculo(){
@@ -199,8 +201,8 @@ float Processadora::calculaDistancia(float x, float y, float z){
 }
 
 int Processadora::convertePixelQuadrante(std::pair<int,int> pixel){
-    int halfWidth = rs_sensor.get_width()/2;
-    int halfHeight = rs_sensor.get_height()/2;
+    int halfWidth = rs_sensor.get_img_width()/2;
+    int halfHeight = rs_sensor.get_img_height()/2;
 
     if(pixel.first > halfWidth && pixel.second > halfHeight){
         return 1;

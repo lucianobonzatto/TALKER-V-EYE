@@ -27,8 +27,10 @@ public:
     void print_img();
     float get_depth(int x, int y);
     Mat* get_img();
-    int get_width();
-    int get_height();
+    int get_depth_width();
+    int get_depth_height();
+    int get_img_width();
+    int get_img_height();
     int tryConnection();
     void print_points();
     rs2::points* getPoints();

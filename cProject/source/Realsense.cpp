@@ -36,12 +36,16 @@ void Realsense::read_img(){
     pipe.poll_for_frames(&frame);
     
     //remap the image
-    cv::Mat image_aux(Size(frame.get_depth_frame().get_width(), frame.get_depth_frame().get_height()), CV_8UC3, (void*)frame.get_data(), Mat::AUTO_STEP);
-    image = image_aux;
+    int w = frame.get_color_frame().get_width();
+    int h = frame.get_color_frame().get_height();
+    cv::Mat image_aux(Size(w, h), CV_8UC3, (void*)frame.get_color_frame().get_data(), Mat::AUTO_STEP);
+    cvtColor(image_aux, image, COLOR_BGR2RGB);
+    
     
     //remap the pointClound
-    rs2::pointcloud pointCloud;// = rs2::context().create_pointcloud();
+    rs2::pointcloud pointCloud;
     points = pointCloud.calculate(frame.get_depth_frame());
+
 }
 
 void Realsense::print_img(){
@@ -72,12 +76,20 @@ void Realsense::print_points(){
     cout << teste[min].x << endl;
 }
 
-int Realsense::get_width(){
+int Realsense::get_depth_width(){
     return frame.get_depth_frame().get_width();
 }
 
-int Realsense::get_height(){
+int Realsense::get_depth_height(){
     return frame.get_depth_frame().get_height();
+}
+
+int Realsense::get_img_width(){
+    return frame.get_color_frame().get_width();
+}
+
+int Realsense::get_img_height(){
+    return frame.get_color_frame().get_height();
 }
 
 float Realsense::get_depth(int x, int y){

@@ -44,11 +44,12 @@ static void* sendMessage(void *attr) {
     cout << "connected in server!" << endl;
     vector<uchar> buff = socketClient->getBufferImg();
     
-    string str(socketClient->getBufferImg().begin(), socketClient->getBufferImg().end());
-
-    int sendRes = send(socketClient->getSockClient(), str.c_str(), str.size() + 1, 0);
-    if(sendRes == -1) {
-        cout << "Could not send to server! \n";
+    string str(buff.begin(), buff.end());
+    for(int i = 0; i < buff.size(); i++) {
+  	int sendRes = send(socketClient->getSockClient(),  str.c_str(), str.size() +1, 0);
+        if(sendRes == -1) {
+           cout << "Could not send to server! \n";
+        }
     }
     printf("close socket\n");
     close(socketClient->getSockClient());
