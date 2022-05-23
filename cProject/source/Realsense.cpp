@@ -41,11 +41,9 @@ void Realsense::read_img(){
     cv::Mat image_aux(Size(w, h), CV_8UC3, (void*)frame.get_color_frame().get_data(), Mat::AUTO_STEP);
     cvtColor(image_aux, image, COLOR_BGR2RGB);
     
-    
     //remap the pointClound
     rs2::pointcloud pointCloud;
     points = pointCloud.calculate(frame.get_depth_frame());
-
 }
 
 void Realsense::print_img(){

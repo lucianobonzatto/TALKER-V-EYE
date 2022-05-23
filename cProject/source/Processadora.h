@@ -13,8 +13,10 @@
 #define INTERV_ANALISE 20
 #define INTERV_OBSTACULO 0.20
 #define MIN_PONTOS_QUADRANTE 1
-#define DIST_MAX 3
-#define DIST_MIN 1
+#define DIST_MAX_RS 3
+#define DIST_MIN_RS 0.3
+#define DIST_MAX_LL 200
+#define DIST_MIN_LL 20
 
 using namespace std;
 
@@ -34,12 +36,14 @@ private:
     void printLLDepth();
     void testeMotor();
     void detectaObstaculo();
+    void detectaLidar();
     float alturaRealsense;
     std::pair<int,int> convertePontoPixel(float x, float y, float z);
     int convertePontoQuadrante(float x, float y);
     float calculaDistancia(float x, float y, float z);
     int convertePixelQuadrante(std::pair<int,int> pixel);
-    int converteDistanciaIntensidade(float distancia);
+    int converteDistanciaIntensidade_rs(float distancia);
+    int converteDistanciaIntensidade_ll(float distancia);
 
 public:
     Processadora();
