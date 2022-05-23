@@ -74,7 +74,6 @@ public class ServiceTextToSpeechApi {
         stringBuilder = stringBuilder.deleteCharAt(stringBuilder.length() - 1); //delete the last comma
 
         // Set the text input to be synthesized
-        //this.input = SynthesisInput.newBuilder().setText("Hello, Camilo!").build(); //Ao invés de ser um array de strings, tem que ser uma string grande separada por virgula
         this.input = SynthesisInput.newBuilder().setText(stringBuilder.toString()).build();
 
         // Build the voice request, select the language code ("en-US") and the ssml voice gender

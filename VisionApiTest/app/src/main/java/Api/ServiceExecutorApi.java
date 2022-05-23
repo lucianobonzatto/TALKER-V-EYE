@@ -38,6 +38,7 @@ public class ServiceExecutorApi implements Runnable {
     @Override
     public void run() {
         try {
+<<<<<<< HEAD
 
 	    this.writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
             this.reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
@@ -68,6 +69,11 @@ public class ServiceExecutorApi implements Runnable {
             } else {
                 System.out.println("Não foi identificado um objeto");
             }
+=======
+            List<ApiImage> imagesList = new ServiceVisionApi().detectionLocalizedObjects();
+            String pathMp3File = new ServiceTextToSpeechApi(imagesList).generateAudioFromText();
+            System.out.println(pathMp3File);
+>>>>>>> 0c049a57b984b4b712ce00f26ebd8d34ccd1d65c
         } catch (IOException ex) {
             ex.printStackTrace();
         }
