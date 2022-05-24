@@ -74,8 +74,7 @@ public class ServiceVisionApi {
         // the "close" method on the client to safely clean up any remaining background resources.
 
         // The path to the image file to annotate
-        String fileName = "/home/lukn23/TALKER-V-EYE/VisionApiTest/app/src/main/resources/wakeupcat.jpg";
-        // String fileName = "C:\\Users\\kamir\\Documents\\NetBeansProjects\\VisionApiTest\\app\\src\\main\\resources\\wakeupcat.jpg";
+        String fileName = "/home/lukn23/TALKER-V-EYE/VisionApiTest/app/src/main/resources/teste.jpg";
         // Reads the image file into memory
         Path path = Paths.get(fileName);
         byte[] data = Files.readAllBytes(path);

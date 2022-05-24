@@ -5,6 +5,7 @@
 package Api;
 
 import Model.ApiImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,6 +16,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 /**
  *
  * @author kamir
@@ -38,17 +43,14 @@ public class ServiceExecutorApi implements Runnable {
     @Override
     public void run() {
         try {
-<<<<<<< HEAD
 
-	    this.writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
-            this.reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
-
+	   
             ArrayList<Integer> imgTempData = new ArrayList<>();
             int temp;
             while ((temp = reader.read()) != -1) {
                  imgTempData.add(temp);
             }
-            
+            System.out.println("size: " + imgTempData.size());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos;
             try {
@@ -58,22 +60,22 @@ public class ServiceExecutorApi implements Runnable {
 		e.printStackTrace();
             }
             imageData = baos.toByteArray();
-             
+	    
+//            ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
+//            BufferedImage bImage2 = ImageIO.read(bis);
+//            ImageIO.write(bImage2, "jpg", new File("output.jpg") );
+//            System.out.println("image created");
+                        
             socket.close();
 
-            List<ApiImage> imagesList = new ServiceVisionApi(imageData).detectionLocalizedObjects();
+            List<ApiImage> imagesList = new ServiceVisionApi().detectionLocalizedObjects();
             System.out.println("BETWEEN API \n\n\n ");
             if(!imagesList.isEmpty() ){
                 String pathMp3File = new ServiceTextToSpeechApi(imagesList).generateAudioFromText();
                 System.out.println(pathMp3File);
             } else {
                 System.out.println("Não foi identificado um objeto");
-            }
-=======
-            List<ApiImage> imagesList = new ServiceVisionApi().detectionLocalizedObjects();
-            String pathMp3File = new ServiceTextToSpeechApi(imagesList).generateAudioFromText();
-            System.out.println(pathMp3File);
->>>>>>> 0c049a57b984b4b712ce00f26ebd8d34ccd1d65c
+            } 
         } catch (IOException ex) {
             ex.printStackTrace();
         }

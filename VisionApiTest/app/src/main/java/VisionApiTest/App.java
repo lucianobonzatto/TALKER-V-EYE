@@ -13,12 +13,5 @@ public class App {
         // the "close" method on the client to safely clean up any remaining background resources.
 
         new ServerSocketForImage().start();
-<<<<<<< HEAD
-     
-=======
-
-        //ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
-        //singleExecutor.execute(new ServiceExecutorApi());
->>>>>>> 0c049a57b984b4b712ce00f26ebd8d34ccd1d65c
     }
 }
