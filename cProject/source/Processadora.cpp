@@ -158,7 +158,7 @@ void Processadora::detectaObstaculo(){
             //continue;
         //}
         if(distanciaAtual < distanciaMinima){
-            if ((abs(zi - alturaRealsense) > INTERV_CHAO) && (distanciaAtual > DIST_MIN_RS) && (distanciaAtual < DIST_MAX_RS))
+            if ((abs(zi - configuracao.getAlturaRealsense()/*alturaRealsense*/) > INTERV_CHAO) && (distanciaAtual > configuracao.getLarguraBraco()/*DIST_MIN_RS*/) && (distanciaAtual < configuracao.getProfundidadeMaxima()/*DIST_MAX_RS*/))
             {
                 indiceMenorPonto = i;
                 distanciaMinima = distanciaAtual;

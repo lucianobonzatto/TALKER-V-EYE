@@ -28,6 +28,13 @@ static void* receive_message(void *arg_thread) {
             cout << client_message << endl;
         }
 
+        if(read_size > 0){ //recebeu nova mensagem
+            messageReceived = true;
+            for(int i = 0; i < 2000; i++){  //JEITO HORRIVEL DE COPIAR VETOR DE CHAR!
+                message[i] = client_message[i];
+            }
+        }
+
         if(read_size == 0){
             puts("Client disconnected");
             fflush(stdout);
@@ -39,12 +46,13 @@ static void* receive_message(void *arg_thread) {
     }
 }
 
-
 void SocketServer::init() {
     port = 9098;
     addrlen = sizeof(address);
     //int valread;
     opt = 1;
+    messageReceived = false;
+    message = new char[2000];
 
     if ((serverSocket = socket(AF_INET, SOCK_STREAM,0)) ==0) {
         perror("server socket creation failed");
@@ -80,6 +88,16 @@ void SocketServer::init() {
         exit (1) ;
     }
 }
+
+char* SocketServer::getMessage(){
+    messageReceived = false;
+    return message;
+}
+
+bool SocketServer::messageReceived(){
+    return messageReceived;
+}
+
 
 int SocketServer::getServerSocket(){
    return serverSocket;

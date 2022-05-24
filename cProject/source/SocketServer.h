@@ -32,6 +32,8 @@ private:
     int opt;
     pthread_t thread;
     pthread_attr_t attr;
+    bool messageReceived;
+    char* message;
 
 public:
     SocketServer();
@@ -40,6 +42,8 @@ public:
     int getServerSocket();
     int getClientSocket();
     int getAddrlen();
+    char* getMessage();
+    bool messageReceived();
     struct sockaddr_in getAddress();
 };
 
