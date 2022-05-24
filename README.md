@@ -19,6 +19,10 @@ $ make all
 run the project
 $ ./TALKER-V-EYE
 ```
+
+###Java Project
+$ ./gradlew run
+
 ## References
 
  ### Realsense
