@@ -13,9 +13,12 @@ Processadora::Processadora() {
     m1.setIntensity(0);
     mp.setIntensity(0);
 
+    rs_sensor.read_img();
+    usleep(1000000);
+
     int teste = 0;
     int count = 0;
-    while(teste < 100){
+    while(teste < 10){
         teste++;
         std::cout << endl << "============================= " << teste << " ===============================" << endl;
 //        testeMotor();
@@ -24,7 +27,7 @@ Processadora::Processadora() {
         cv::Mat* img =  rs_sensor.get_img();
 //        imshow("Display window", *img);
 //        int k = waitKey(0);
-        if(count ==0){
+        if(count == 0){
            sockClient.sendImageForApi(img);
 	   cout << "send image finished "<< endl;
            count++;
@@ -162,7 +165,7 @@ void Processadora::detectaObstaculo(){
             //continue;
         //}
         if(distanciaAtual < distanciaMinima){
-            if ((abs(zi - configuracao.getAlturaRealsense()/*alturaRealsense*/) > INTERV_CHAO) && (distanciaAtual > configuracao.getLarguraBraco()/*DIST_MIN_RS*/) && (distanciaAtual < configuracao.getProfundidadeMaxima()/*DIST_MAX_RS*/))
+            if ((abs(zi - alturaRealsense) > INTERV_CHAO) && (distanciaAtual > DIST_MIN_RS) && (distanciaAtual < DIST_MAX_RS))
             {
                 indiceMenorPonto = i;
                 distanciaMinima = distanciaAtual;
