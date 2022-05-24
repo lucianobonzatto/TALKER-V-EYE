@@ -14,20 +14,24 @@ Processadora::Processadora() {
     mp.setIntensity(0);
 
     int teste = 0;
-
+    int count = 0;
     while(teste < 100){
         teste++;
         std::cout << endl << "============================= " << teste << " ===============================" << endl;
 //        testeMotor();
 
         rs_sensor.read_img();
-//        cv::Mat* img =  rs_sensor.get_img();
+        cv::Mat* img =  rs_sensor.get_img();
 //        imshow("Display window", *img);
 //        int k = waitKey(0);
-//        sockClient.sendImageForApi(img);
-
+        if(count ==0){
+           sockClient.sendImageForApi(img);
+	   cout << "send image finished "<< endl;
+           count++;
+	}
+        
 //        detectaObstaculo();
-        detectaLidar();
+//        detectaLidar();
 
 //        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
 //        rs_sensor.print_points();

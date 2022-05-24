@@ -28,10 +28,7 @@ void SocketClient::init() {
 
 static void* sendMessage(void *attr) {
     cout <<"send message init" << endl;
-    //uchar *charBuf = (uchar*)attr;
-    /* create a vector by copying out the contents of charBuf */
-    //vector<uchar> jpegData(charBuf, charBuf + len);
-
+    
     SocketClient* socketClient = static_cast<SocketClient*>(attr);
     sockaddr_in hint = socketClient->getHint();
 
@@ -39,49 +36,46 @@ static void* sendMessage(void *attr) {
     int connectRes = connect(socketClient->getSockClient(), (sockaddr*)&hint, sizeof(hint));
     if(connectRes == -1) {
        cerr << "Can't connect in server!" <<endl;
-       return 0;
+       pthread_exit(NULL);
     }
+
     cout << "connected in server!" << endl;
     vector<uchar> buff = socketClient->getBufferImg();
     
     string str(buff.begin(), buff.end());
-    for(int i = 0; i < buff.size(); i++) {
-  	int sendRes = send(socketClient->getSockClient(),  str.c_str(), str.size() +1, 0);
-        if(sendRes == -1) {
-           cout << "Could not send to server! \n";
-        }
+    
+    int sendRes = send(socketClient->getSockClient(),  str.c_str(), str.size() +1, 0);
+    if(sendRes == -1) {
+       cout << "Could not send to server! \n";
+       pthread_exit(NULL);
     }
-    printf("close socket\n");
+    
     close(socketClient->getSockClient());
-    return 0;
+    printf("close socket\n");
+    pthread_exit(NULL);
 }
 
 void SocketClient::sendImageForApi(cv::Mat* img) { //Vai ter os dados da imagem da realsense
     cout<< "Init send image for api" << endl;
 
-   cv::imwrite("some.jpg", *img);
-   cv::imshow("some", *img);
-   cv::waitKey();
-
     //Init attr for thread
-    pthread_attr_init (&attr) ;
-    pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE);
 
    // std::vector<uchar> buff;//buffer for img
     std::vector<int> param(2);
     param[0] = cv::IMWRITE_JPEG_QUALITY;
     param[1] = 80;//default(95) 0-100
     cv::imencode(".jpg", *img, bufferImg, param);
-
-    cout <<"finish image decode" << endl;
-    long status = pthread_create (&thread, &attr, sendMessage,(void*) this);
+    
+    ///home/lukn23/TALKER-V-EYE/VisionApiTest/app/src/main/resources    (this is java resources path)
+    imwrite("/home/lukn23/TALKER-V-EYE/VisionApiTest/app/src/main/resources/teste.jpg", *img);
+    
+    long status = pthread_create (&thread, NULL, sendMessage,(void*) this);
     if (status) {
         perror ("pthread_create") ;
-        exit (1) ;
+        exit(1);
     }
 
-    pthread_attr_destroy (&attr) ;
-    pthread_exit (NULL) ;
+   // pthread_exit (NULL) ;
 }
 
 void SocketClient::setBufferImg(vector<uchar> bufferImgAttr){
