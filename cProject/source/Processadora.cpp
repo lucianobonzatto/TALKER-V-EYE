@@ -25,16 +25,16 @@ Processadora::Processadora() {
 
         rs_sensor.read_img();
         cv::Mat* img =  rs_sensor.get_img();
-//        imshow("Display window", *img);
-//        int k = waitKey(0);
+/*        imshow("Display window", *img);
+        int k = waitKey(0);
         if(count == 0){
            sockClient.sendImageForApi(img);
 	   cout << "send image finished "<< endl;
            count++;
 	}
-        
-//        detectaObstaculo();
-//        detectaLidar();
+*/        
+        detectaObstaculo();
+        detectaLidar();
 
 //        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
 //        rs_sensor.print_points();
@@ -148,7 +148,7 @@ void Processadora::detectaObstaculo(){
     auto vertices = pontos->get_vertices();
     float distanciaMinima = 99999999;
     int indiceMenorPonto = 0;
-
+    
     /*Primeira varredura na nuvem de pontos*/
     for (int i = 0; i < pontos->size(); i++)
     {
@@ -165,8 +165,9 @@ void Processadora::detectaObstaculo(){
             //continue;
         //}
         if(distanciaAtual < distanciaMinima){
-            if ((abs(zi - alturaRealsense) > INTERV_CHAO) && (distanciaAtual > DIST_MIN_RS) && (distanciaAtual < DIST_MAX_RS))
-            {
+           // if ((abs(zi - alturaRealsense) > INTERV_CHAO) && (distanciaAtual > DIST_MIN_RS) && (distanciaAtual < DIST_MAX_RS))
+           if ((abs(zi - config.getAlturaRealsense()/100) > INTERV_CHAO) && (distanciaAtual > config.getLarguraBraco()/100) && (distanciaAtual < config.getProfundidadeMaxima())) 
+	   {
                 indiceMenorPonto = i;
                 distanciaMinima = distanciaAtual;
             }

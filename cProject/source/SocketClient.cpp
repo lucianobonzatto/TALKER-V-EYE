@@ -47,7 +47,6 @@ static void* sendMessage(void *attr) {
     int sendRes = send(socketClient->getSockClient(),  str.c_str(), str.size() +1, 0);
     if(sendRes == -1) {
        cout << "Could not send to server! \n";
-       pthread_exit(NULL);
     }
     
     close(socketClient->getSockClient());
@@ -60,7 +59,6 @@ void SocketClient::sendImageForApi(cv::Mat* img) { //Vai ter os dados da imagem 
 
     //Init attr for thread
 
-   // std::vector<uchar> buff;//buffer for img
     std::vector<int> param(2);
     param[0] = cv::IMWRITE_JPEG_QUALITY;
     param[1] = 80;//default(95) 0-100
@@ -74,8 +72,6 @@ void SocketClient::sendImageForApi(cv::Mat* img) { //Vai ter os dados da imagem 
         perror ("pthread_create") ;
         exit(1);
     }
-
-   // pthread_exit (NULL) ;
 }
 
 void SocketClient::setBufferImg(vector<uchar> bufferImgAttr){

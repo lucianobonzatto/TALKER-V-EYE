@@ -50,7 +50,7 @@ public class ServiceExecutorApi implements Runnable {
             while ((temp = reader.read()) != -1) {
                  imgTempData.add(temp);
             }
-            System.out.println("size: " + imgTempData.size());
+            
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos;
             try {

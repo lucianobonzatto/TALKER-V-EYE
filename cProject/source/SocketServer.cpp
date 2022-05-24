@@ -29,10 +29,7 @@ static void* receive_message(void *arg_thread) {
         }
 
         if(read_size > 0){ //recebeu nova mensagem
-            messageReceived = true;
-            for(int i = 0; i < 2000; i++){  //JEITO HORRIVEL DE COPIAR VETOR DE CHAR!
-                message[i] = client_message[i];
-            }
+            socketServer->setMessage(client_message);
         }
 
         if(read_size == 0){
@@ -42,6 +39,7 @@ static void* receive_message(void *arg_thread) {
         else if(read_size == -1){
             perror("recv failed");
         }
+
         close(client_socket);
     }
 }
@@ -51,7 +49,7 @@ void SocketServer::init() {
     addrlen = sizeof(address);
     //int valread;
     opt = 1;
-    messageReceived = false;
+    msgReceived = false;
     message = new char[2000];
 
     if ((serverSocket = socket(AF_INET, SOCK_STREAM,0)) ==0) {
@@ -80,22 +78,27 @@ void SocketServer::init() {
 
     cout << "server socket created" << endl;
 
-    pthread_attr_init (&attr) ;
-    pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE);
-    long status = pthread_create (&thread, &attr, receive_message, (void *) this) ;
+    long status = pthread_create (&thread, NULL, receive_message, (void *) this) ;
      if (status) {
         perror ("pthread_create") ;
         exit (1) ;
     }
 }
 
+void SocketServer::setMessage(char* msg){
+    msgReceived = true;
+    for(int i = 0; i < 2000; i++){  //JEITO HORRIVEL DE COPIAR VETOR DE CHAR!
+       message[i] = msg[i];
+    }
+}
+
 char* SocketServer::getMessage(){
-    messageReceived = false;
+    msgReceived = false;
     return message;
 }
 
 bool SocketServer::messageReceived(){
-    return messageReceived;
+    return msgReceived;
 }
 
 

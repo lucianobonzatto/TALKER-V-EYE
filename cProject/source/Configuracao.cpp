@@ -4,7 +4,7 @@ Configuracao::Configuracao() {
     /*ABRIR ARQUIVO DE CONFIGURACAO - PENDENTE*/
     //Config padrao
     alturaRealsense = 170;
-    larguraBraco = 60;
+    larguraBraco = 10;
     profundidadeMaxima = 3;
 }
 
@@ -35,7 +35,7 @@ void Configuracao::converteDados(char* dados){
     //XUNXO. Formato dos dados = "AAA,LL,P" -> Contém 8 caracteres.
     char altura[3];
     altura[0] = dados[0];
-    altura[1] = dados[2];
+    altura[1] = dados[1];
     altura[2] = dados[2];
     alturaRealsense = atof(altura);
 

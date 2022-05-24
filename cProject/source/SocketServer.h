@@ -32,13 +32,14 @@ private:
     int opt;
     pthread_t thread;
     pthread_attr_t attr;
-    bool messageReceived;
+    bool msgReceived;
     char* message;
 
 public:
     SocketServer();
     ~SocketServer();
     void init();
+    void setMessage(char* msg);
     int getServerSocket();
     int getClientSocket();
     int getAddrlen();

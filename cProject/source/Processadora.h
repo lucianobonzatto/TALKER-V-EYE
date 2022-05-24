@@ -7,7 +7,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "SocketClient.h"
-#include "SocketServer.h"
+#include "Configuracao.h"
 
 #define INTERV_CHAO 0.10
 #define INTERV_ANALISE 20
@@ -29,8 +29,8 @@ private:
     MotorVib m3;
     MotorVib m4;
     MotorVib mp;
-    SocketClient sockClient;
-//    SocketServer sockServer;
+//    SocketClient sockClient;
+    Configuracao config;
 
     void printRSDepth();
     void printLLDepth();
