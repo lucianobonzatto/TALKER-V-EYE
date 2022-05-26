@@ -9,7 +9,7 @@ SocketServer::~SocketServer() {
 }
 
 static void* receive_message(void *arg_thread) {
- cout << "in receive_message" << endl;
+// cout << "in receive_message" << endl;
  SocketServer* socketServer = static_cast<SocketServer*>(arg_thread);
  while(true){
         char client_message[2000];
@@ -18,22 +18,19 @@ static void* receive_message(void *arg_thread) {
 
         int addrlen = socketServer->getAddrlen();
         if((client_socket = accept(socketServer->getServerSocket(), (struct sockaddr*)&addr, (socklen_t*)&addrlen)) <0) {
-            perror("Error in accept function");
+//            perror("Error in accept function");
             exit(EXIT_FAILURE);
         }
-        cout << "message received from client" << endl;
+//        cout << "message received from client" << endl;
         //Receive a message from client
         int read_size;
         while( (read_size = recv(client_socket , client_message , 2000 , 0)) > 0 ){
-            cout << client_message << endl;
-        }
-
-        if(read_size > 0){ //recebeu nova mensagem
+//            cout << "msg -> " << client_message << endl;
             socketServer->setMessage(client_message);
         }
 
         if(read_size == 0){
-            puts("Client disconnected");
+//            puts("Client disconnected");
             fflush(stdout);
         }
         else if(read_size == -1){
@@ -63,7 +60,7 @@ void SocketServer::init() {
     }
 
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = inet_addr("192.168.0.27");
+    address.sin_addr.s_addr = inet_addr("192.168.43.130");
     address.sin_port = htons(PORT);
 
     if(bind(serverSocket, (struct sockaddr*)&address, sizeof(address))<0) {

@@ -177,19 +177,13 @@ void Processadora::detectaObstaculo(){
         //}
         if(distanciaAtual < distanciaMinima){
            // if ((abs(zi - alturaRealsense) > INTERV_CHAO) && (distanciaAtual > DIST_MIN_RS) && (distanciaAtual < DIST_MAX_RS))
-//           if (abs(xi*(-1) - config.getAlturaRealsense()/100) > INTERV_CHAO) {
-
-//           cout << "ponto -> " << xi << endl;
-           if (xi>0 || abs(xi*(-1) - config.getAlturaRealsense()/100) > INTERV_CHAO) {
+           if (abs(xi*(-1) - config.getAlturaRealsense()/100) > INTERV_CHAO) {
                if ((distanciaAtual > config.getLarguraBraco()/100) && (distanciaAtual < config.getProfundidadeMaxima())){
-//                    cout << "ponto -> " << xi << "vll -> " << abs(xi*(-1) - config.getAlturaRealsense()/100) << endl;
                     indiceMenorPonto = i;
                     distanciaMinima = distanciaAtual;
                 }
            }
            else{
-//               cout << "ponto -> " << xi << endl;
-               
            }
         }
     }
@@ -199,8 +193,6 @@ void Processadora::detectaObstaculo(){
     float n_pontos_obtaculo_quadrante_3 = 0;
     float n_pontos_obtaculo_quadrante_4 = 0;
 
-    cout << "ponto -> " << vertices[indiceMenorPonto].x << endl;
-
     /*Segunda varredura na nuvem de pontos*/
     for (int i = 0; i < pontos->size(); i++)
     {
@@ -208,10 +200,6 @@ void Processadora::detectaObstaculo(){
         float yi = vertices[i].y;
         float zi = vertices[i].z;
         float distanciaAtual = calculaDistancia(xi, yi, zi);
-
-        if ((xi<0) && (abs(xi*(-1) - config.getAlturaRealsense()/100) < INTERV_CHAO)) {
-            continue;
-        }
 
         if(abs(distanciaAtual - distanciaMinima) < INTERV_OBSTACULO){   //Identifica pontos proximos ao ponto mais proximo do usuario
             int quadrante = convertePontoQuadrante(xi, yi);

@@ -1,10 +1,10 @@
 #include "Processadora.h"
 
 Processadora::Processadora() {
-    m1.setPin(15);
-    m2.setPin(24);
+    m1.setPin(14);
+    m2.setPin(15);
     m3.setPin(23);
-    m4.setPin(14);
+    m4.setPin(24);
     mp.setPin(17);
 
     m4.setIntensity(0);
@@ -18,14 +18,15 @@ Processadora::Processadora() {
 
     int teste = 0;
     int count = 0;
-    while(teste < 1000){
+    while(teste < 10000){
         teste++;
         usleep(80000);
 //        system("clear");
         std::cout << endl << "============================= " << teste << " ===============================" << endl;
 //        testeMotor();
 
-        rs_sensor.read_img();
+
+//        rs_sensor.read_img();
 //        cv::Mat* img =  rs_sensor.get_img();
 /*        imshow("Display window", *img);
         int k = waitKey(0);
@@ -35,12 +36,12 @@ Processadora::Processadora() {
            count++;
 	}
 */
-        detectaObstaculo();
+//        detectaObstaculo();
 //        detectaLidar();
 
-        cout << "altura -> " << config.getAlturaRealsense() << endl;
-        cout << "braco -> " << config.getLarguraBraco() << endl;
-        cout << "profMax -> " << config.getProfundidadeMaxima() << endl;
+//        cout << "altura -> " << config.getAlturaRealsense() << endl;
+//        cout << "braco -> " << config.getLarguraBraco() << endl;
+//        cout << "profMax -> " << config.getProfundidadeMaxima() << endl;
 
 //        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
 //        rs_sensor.print_points();
@@ -177,20 +178,11 @@ void Processadora::detectaObstaculo(){
         //}
         if(distanciaAtual < distanciaMinima){
            // if ((abs(zi - alturaRealsense) > INTERV_CHAO) && (distanciaAtual > DIST_MIN_RS) && (distanciaAtual < DIST_MAX_RS))
-//           if (abs(xi*(-1) - config.getAlturaRealsense()/100) > INTERV_CHAO) {
-
-//           cout << "ponto -> " << xi << endl;
-           if (xi>0 || abs(xi*(-1) - config.getAlturaRealsense()/100) > INTERV_CHAO) {
-               if ((distanciaAtual > config.getLarguraBraco()/100) && (distanciaAtual < config.getProfundidadeMaxima())){
-//                    cout << "ponto -> " << xi << "vll -> " << abs(xi*(-1) - config.getAlturaRealsense()/100) << endl;
-                    indiceMenorPonto = i;
-                    distanciaMinima = distanciaAtual;
-                }
-           }
-           else{
-//               cout << "ponto -> " << xi << endl;
-               
-           }
+           if ((abs(zi - config.getAlturaRealsense()/100) > INTERV_CHAO) && (distanciaAtual > config.getLarguraBraco()/100) && (distanciaAtual < config.getProfundidadeMaxima())) 
+	   {
+                indiceMenorPonto = i;
+                distanciaMinima = distanciaAtual;
+            }
         }
     }
 
@@ -199,8 +191,6 @@ void Processadora::detectaObstaculo(){
     float n_pontos_obtaculo_quadrante_3 = 0;
     float n_pontos_obtaculo_quadrante_4 = 0;
 
-    cout << "ponto -> " << vertices[indiceMenorPonto].x << endl;
-
     /*Segunda varredura na nuvem de pontos*/
     for (int i = 0; i < pontos->size(); i++)
     {
@@ -208,10 +198,6 @@ void Processadora::detectaObstaculo(){
         float yi = vertices[i].y;
         float zi = vertices[i].z;
         float distanciaAtual = calculaDistancia(xi, yi, zi);
-
-        if ((xi<0) && (abs(xi*(-1) - config.getAlturaRealsense()/100) < INTERV_CHAO)) {
-            continue;
-        }
 
         if(abs(distanciaAtual - distanciaMinima) < INTERV_OBSTACULO){   //Identifica pontos proximos ao ponto mais proximo do usuario
             int quadrante = convertePontoQuadrante(xi, yi);
@@ -301,16 +287,16 @@ int Processadora::convertePixelQuadrante(std::pair<int,int> pixel){
 }
 
 int Processadora::convertePontoQuadrante(float x, float y){
-    if(x > 0 && y < 0){
+    if(x > 0 && y > 0){
         return 1;
     }
-    else if(x > 0 && y > 0){
+    else if(x < 0 && y > 0){
         return 2;
     }
-    else if(x < 0 && y > 0){
+    else if(x < 0 && y < 0){
         return 3;
     }
-    else if(x < 0 && y < 0){
+    else if(x > 0 && y < 0){
         return 4;
     }
     return -1;

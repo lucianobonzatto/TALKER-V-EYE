@@ -3,9 +3,9 @@
 Configuracao::Configuracao() {
     /*ABRIR ARQUIVO DE CONFIGURACAO - PENDENTE*/
     //Config padrao
-    alturaRealsense = 170;
-    larguraBraco = 10;
-    profundidadeMaxima = 3;
+    alturaRealsense = 130;
+    larguraBraco = 20;
+    profundidadeMaxima = 1;
 }
 
 float Configuracao::getAlturaRealsense(){
@@ -40,12 +40,12 @@ void Configuracao::converteDados(char* dados){
     alturaRealsense = atof(altura);
 
     char largura_braco[2];
-    altura[4] = dados[4];
-    altura[5] = dados[5];
+    largura_braco[0] = dados[4];
+    largura_braco[1] = dados[5];
     larguraBraco = atof(largura_braco);
 
     char profundidade_max[1];
-    altura[7] = dados[7];
+    profundidade_max[0] = dados[7];
     profundidadeMaxima = atof(profundidade_max);
 }
 
