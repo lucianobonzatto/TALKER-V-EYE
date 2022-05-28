@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 /**
- *
  * @author kamir
  */
 public class ServerSocketForImage extends Thread { //Server Socket 
@@ -19,7 +18,6 @@ public class ServerSocketForImage extends Thread { //Server Socket
     private int port = 9090;
 
     public ServerSocketForImage() {
-       
     }
 
     public void run() {

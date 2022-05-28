@@ -5,8 +5,12 @@
 package Api;
 
 import Model.ApiImage;
+import Service.AudioPlayer;
+
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
@@ -15,13 +19,9 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import java.awt.image.BufferedImage;
-import java.io.File;
 import javax.imageio.ImageIO;
+
 /**
- *
  * @author kamir
  */
 public class ServiceExecutorApi implements Runnable {
@@ -37,45 +37,47 @@ public class ServiceExecutorApi implements Runnable {
     public ServiceExecutorApi(Socket socket) throws IOException {
         this.writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
         this.reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
-	this.socket = socket;
+        this.socket = socket;
     }
 
     @Override
     public void run() {
         try {
+            this.writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
+            this.reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
 
-	   
             ArrayList<Integer> imgTempData = new ArrayList<>();
             int temp;
+
             while ((temp = reader.read()) != -1) {
-                 imgTempData.add(temp);
+                imgTempData.add(temp);
             }
-            
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos;
             try {
-		oos = new ObjectOutputStream(baos);
-		oos.writeObject(imgTempData);
+                oos = new ObjectOutputStream(baos);
+                oos.writeObject(imgTempData);
             } catch (IOException e) {
-		e.printStackTrace();
+                e.printStackTrace();
             }
             imageData = baos.toByteArray();
-	    
-//            ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
-//            BufferedImage bImage2 = ImageIO.read(bis);
-//            ImageIO.write(bImage2, "jpg", new File("output.jpg") );
-//            System.out.println("image created");
-                        
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
+            BufferedImage bImage2 = ImageIO.read(bis);
+            ImageIO.write(bImage2, "jpg", new File("output.jpg")); */
+
             socket.close();
 
-            List<ApiImage> imagesList = new ServiceVisionApi().detectionLocalizedObjects();
+            List<ApiImage> imagesList = new ServiceVisionApi(imageData).detectionLocalizedObjects();
+
             System.out.println("BETWEEN API \n\n\n ");
-            if(!imagesList.isEmpty() ){
+
+            if (!imagesList.isEmpty()) {
                 String pathMp3File = new ServiceTextToSpeechApi(imagesList).generateAudioFromText();
+                new AudioPlayer().play(pathMp3File);
                 System.out.println(pathMp3File);
             } else {
                 System.out.println("Não foi identificado um objeto");
-            } 
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author kamir
  */
 public class ServiceVisionApi {
@@ -52,7 +51,7 @@ public class ServiceVisionApi {
                     image.setObjectConfidence(entity.getScore());
                     image.setVertexList(entity.getBoundingPoly().getNormalizedVerticesList());
                     imagesList.add(image);
-                    //for debbug
+                    //for debug
                     System.out.format("Object name: %s%n", entity.getName());
                     System.out.format("Confidence: %s%n", entity.getScore());
                     System.out.format("Normalized Vertices:%n");
@@ -74,7 +73,10 @@ public class ServiceVisionApi {
         // the "close" method on the client to safely clean up any remaining background resources.
 
         // The path to the image file to annotate
+        //String fileName = "./resources/wakeupcat.jpg";
+        //String fileName = "C:\\Users\\kamir\\Documents\\NetBeansProjects\\VisionApiTest\\app\\src\\main\\resources\\wakeupcat.jpg";
         String fileName = "/home/lukn23/TALKER-V-EYE/VisionApiTest/app/src/main/resources/teste.jpg";
+
         // Reads the image file into memory
         Path path = Paths.get(fileName);
         byte[] data = Files.readAllBytes(path);
@@ -86,17 +88,13 @@ public class ServiceVisionApi {
         AnnotateImageRequest request
                 = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
         requests.add(request);
-
     }
 
     private void initDetectionLocalizedObjects(byte[] imageData) throws IOException {
         // Initialize client that will be used to send requests. This client only needs to be created
         // once, and can be reused for multiple requests. After completing all of your requests, call
         // the "close" method on the client to safely clean up any remaining background resources.
-
-        // The path to the image file to annotate
-        byte[] data = imageData;
-        ByteString imgBytes = ByteString.copyFrom(data);
+        ByteString imgBytes = ByteString.copyFrom(imageData);
 
         // Builds the image annotation request
         Image img = Image.newBuilder().setContent(imgBytes).build();
@@ -104,6 +102,5 @@ public class ServiceVisionApi {
         AnnotateImageRequest request
                 = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
         requests.add(request);
-
     }
 }

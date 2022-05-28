@@ -13,6 +13,5 @@ public class App {
         // the "close" method on the client to safely clean up any remaining background resources.
 
         new ServerSocketForImage().start();
-
     }
 }
