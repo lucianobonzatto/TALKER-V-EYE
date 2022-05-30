@@ -60,7 +60,8 @@ void SocketServer::init() {
     }
 
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = inet_addr("192.168.43.130");
+    address.sin_addr.s_addr = inet_addr("192.168.0.27");
+//    address.sin_addr.s_addr = inet_addr("192.168.43.130");
     address.sin_port = htons(PORT);
 
     if(bind(serverSocket, (struct sockaddr*)&address, sizeof(address))<0) {

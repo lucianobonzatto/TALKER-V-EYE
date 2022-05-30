@@ -18,14 +18,19 @@ Processadora::Processadora() {
 
     int teste = 0;
     int count = 0;
-    while(teste < 1000){
+    while(teste < 10000){
         teste++;
         usleep(80000);
 //        system("clear");
         std::cout << endl << "============================= " << teste << " ===============================" << endl;
-//        testeMotor();
+        testeMotor();
+//        m4.setIntensity(255);
+//        m3.setIntensity(255);
+//        m2.setIntensity(255);
+//        m1.setIntensity(255);
 
-        rs_sensor.read_img();
+
+//        rs_sensor.read_img();
 //        cv::Mat* img =  rs_sensor.get_img();
 /*        imshow("Display window", *img);
         int k = waitKey(0);
@@ -35,14 +40,14 @@ Processadora::Processadora() {
            count++;
 	}
 */
-        detectaObstaculo();
+//        detectaObstaculo();
 //        detectaLidar();
 
-        cout << "altura -> " << config.getAlturaRealsense() << endl;
-        cout << "braco -> " << config.getLarguraBraco() << endl;
-        cout << "profMax -> " << config.getProfundidadeMaxima() << endl;
+//        cout << "altura -> " << config.getAlturaRealsense() << endl;
+//        cout << "braco -> " << config.getLarguraBraco() << endl;
+//        cout << "profMax -> " << config.getProfundidadeMaxima() << endl;
 
-//        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
+        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
 //        rs_sensor.print_points();
 //        printRSDepth();
 //        rs_sensor.print_img();
