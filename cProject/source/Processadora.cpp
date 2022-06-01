@@ -7,6 +7,10 @@ Processadora::Processadora() {
     m4.setPin(14);
     mp.setPin(17);
 
+    b1.setPin(10);
+    b2.setPin(22);
+    b3.setPin(27);
+
     m4.setIntensity(0);
     m3.setIntensity(0);
     m2.setIntensity(0);
@@ -18,16 +22,26 @@ Processadora::Processadora() {
 
     int teste = 0;
     int count = 0;
-    while(teste < 10000){
+    while(teste < 100){
         teste++;
         usleep(80000);
 //        system("clear");
         std::cout << endl << "============================= " << teste << " ===============================" << endl;
-        testeMotor();
-//        m4.setIntensity(255);
-//        m3.setIntensity(255);
-//        m2.setIntensity(255);
-//        m1.setIntensity(255);
+//        teste dos motores crescente
+//        testeMotor();
+
+/*//      teste dos motores em alto
+        m4.setIntensity(255);
+        m3.setIntensity(255);
+        m2.setIntensity(255);
+        m1.setIntensity(255);*/
+
+/*        if( b1.getState() == 1)
+            std::cout << "b1 -> 1" << endl;
+        if( b2.getState() == 1)
+            std::cout << "b2 -> 1" << endl;
+        if( b3.getState() == 1)
+            std::cout << "b3 -> 1" << endl;*/
 
 
 //        rs_sensor.read_img();

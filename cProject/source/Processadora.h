@@ -1,11 +1,13 @@
 #ifndef UNTITLED_PROCESSADORA_H
 #define UNTITLED_PROCESSADORA_H
 
+#include <iostream>
+#include <unistd.h>
+
 #include "Realsense.h"
 #include "LidarLite.h"
 #include "MotorVib.h"
-#include <iostream>
-#include <unistd.h>
+#include "Button.h"
 #include "SocketClient.h"
 #include "Configuracao.h"
 
@@ -29,6 +31,9 @@ private:
     MotorVib m3;
     MotorVib m4;
     MotorVib mp;
+    Button b1;
+    Button b2;
+    Button b3;
 //    SocketClient sockClient;
     Configuracao config;
 //    float alturaRealsense;
