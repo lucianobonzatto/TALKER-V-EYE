@@ -34,29 +34,26 @@ private:
     int sockClient;
     vector<uchar> bufferImg;
 
-    int heightPixel;
-    int widthPixel;
-    int heightImage;
-    int widthImage;
-    int identifyType;
-
+    int tipoIndentificacao;
+    int alturaPixel;
+    int larguraPixel;
+    int alturaImagem;
+    int larguraImagem;
 public:
     SocketClient();
     ~SocketClient();
     void init();
     void sendImageForApi(cv::Mat* img);
-    void sendImageForApi(cv::Mat* img, int tipoIdentificacao, int alturaPxl, int larguraPxl, int alturaImg, int larguraImg);
+    void sendImageForApi(cv::Mat* img, int identifyType, int heightPixel, int weightPixel, int heightImg, int weightImage);
     void setBufferImg(vector<uchar> bufferImgAttr);
     void setSockClient(int sockClientAttr);
     int getSockClient();
     sockaddr_in getHint();
     vector<uchar> getBufferImg();
- 
     int getHeightPixel();
     int getWidthPixel();
     int getHeightImage();
-    int getWidthImage();
-    int getIdentifyType();
+    int get
 };
 
 #endif //UNTITLED_SOCKET_CLIENT_H

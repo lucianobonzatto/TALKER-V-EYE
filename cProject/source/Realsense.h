@@ -2,6 +2,7 @@
 #define UNTITLED_REALSENSE_H
 
 #include <librealsense2/rs.hpp>
+#include "librealsense2/rsutil.h"
 #include <opencv2/opencv.hpp> 
 #include <iostream>
 #include <vector>
@@ -33,6 +34,7 @@ public:
     int get_img_height();
     int tryConnection();
     void print_points();
+    void point2pixel(int pixel[2], float point[3]);
     rs2::points* getPoints();
 };
 

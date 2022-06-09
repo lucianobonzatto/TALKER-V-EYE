@@ -118,7 +118,6 @@ public class ServiceVisionApi {
         }
         return imagesList;
     }
-
     private void initDetectionLocalizedObjects() throws IOException {
         // Initialize client that will be used to send requests. This client only needs to be created
         // once, and can be reused for multiple requests. After completing all of your requests, call

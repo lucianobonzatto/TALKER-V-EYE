@@ -29,14 +29,12 @@ public class ServiceExecutorApi implements Runnable {
     private OutputStreamWriter writer = null;
     private InputStreamReader reader = null;
     private Socket socket;
-    private byte[] imageData;
+    private int idType, heightPixel, widthPixel, heightImage, widthImage;
 
     public ServiceExecutorApi() {
     }
 
     public ServiceExecutorApi(Socket socket) throws IOException {
-        this.writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
-        this.reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
         this.socket = socket;
     }
 
@@ -46,40 +44,45 @@ public class ServiceExecutorApi implements Runnable {
             this.writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
             this.reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
 
-            ArrayList<Integer> imgTempData = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
             int temp;
 
             while ((temp = reader.read()) != -1) {
-                imgTempData.add(temp);
+                sb.append((char)temp);
             }
-            /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos;
-            try {
-                oos = new ObjectOutputStream(baos);
-                oos.writeObject(imgTempData);
-            } catch (IOException e) {
-                e.printStackTrace();
+            sb.deleteCharAt(sb.length() -1); //removendo o 0 que é enviado pelo socket como termino do envio
+            System.out.println(sb.toString());
+
+            String dataStr = sb.toString();
+            String[] dataArray = dataStr.split(",");
+
+            idType = Integer.parseInt(dataArray[0]);
+
+            //socket.close(); socket será fechado no Service/ServerSocketForImage, apenas o reader e writer são fechados nessa classe
+
+            List<ApiImage> imagesList;
+            if(idType == 0){
+                imagesList = new ServiceVisionApi().detectionLocalizedObjects();
+            } else {
+                imagesList = new ServiceVisionApi().detectionUniqueObject(dataArray);
             }
-            imageData = baos.toByteArray();
-            ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
-            BufferedImage bImage2 = ImageIO.read(bis);
-            ImageIO.write(bImage2, "jpg", new File("output.jpg")); */
-
-            socket.close();
-
-            List<ApiImage> imagesList = new ServiceVisionApi(imageData).detectionLocalizedObjects();
-
             System.out.println("BETWEEN API \n\n\n ");
 
             if (!imagesList.isEmpty()) {
                 String pathMp3File = new ServiceTextToSpeechApi(imagesList).generateAudioFromText();
-                new AudioPlayer().play(pathMp3File);
+                //new AudioPlayer().play(pathMp3File);
+                AudioPlayer.playAudioWithBash();
                 System.out.println(pathMp3File);
             } else {
                 System.out.println("Não foi identificado um objeto");
             }
+            socket.close();
+            writer.close();
+            reader.close();
+	    System.out.println("fim iteração");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
+
 }

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <string>
 
 #include "Realsense.h"
 #include "LidarLite.h"
@@ -17,8 +18,8 @@
 #define MIN_PONTOS_QUADRANTE 500
 //#define DIST_MAX_RS 3
 //#define DIST_MIN_RS 0.3
-#define DIST_MAX_LL 80
-#define DIST_MIN_LL 20
+#define DIST_MAX_LL 150
+#define DIST_MIN_LL 50
 
 using namespace std;
 
@@ -34,9 +35,11 @@ private:
     Button b1;
     Button b2;
     Button b3;
-//    SocketClient sockClient;
+    SocketClient sockClient;
     Configuracao config;
-//    float alturaRealsense;
+
+    int pixelProx[2];
+    bool habilitado;
 
     void printRSDepth();
     void printLLDepth();
@@ -53,6 +56,8 @@ private:
 public:
     Processadora();
     ~Processadora();
+
+    void loop();
 };
 
 #endif //UNTITLED_PROCESSADORA_H

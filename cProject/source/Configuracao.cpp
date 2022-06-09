@@ -5,7 +5,7 @@ Configuracao::Configuracao() {
     //Config padrao
     alturaRealsense = 130;
     larguraBraco = 20;
-    profundidadeMaxima = 1;
+    profundidadeMaxima = 2;
 }
 
 float Configuracao::getAlturaRealsense(){

@@ -24,14 +24,17 @@ public class ServerSocketForImage extends Thread { //Server Socket
         System.out.println("Initializing Server on port " + port);
         try (ServerSocket server = new ServerSocket(port)) {
             while (!Thread.currentThread().isInterrupted()) {
+                System.out.println("waiting a connection");
                 Socket socket = server.accept();
                 System.out.println("Message received on port " + port);
 
                 ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
                 singleExecutor.execute(new ServiceExecutorApi(socket));
+//                socket.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("saiu da thread");
     }
 }

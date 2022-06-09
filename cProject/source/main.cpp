@@ -10,6 +10,7 @@ int main() {
 
 
     Processadora teste;
+    teste.loop();
 
     std::cout << "Bie" << std::endl;
     gpioTerminate();

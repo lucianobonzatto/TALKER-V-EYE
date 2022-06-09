@@ -34,11 +34,18 @@ void Realsense::read_img(){
     //read rs informations
 //    frame = pipe.wait_for_frames();
     pipe.poll_for_frames(&frame);
-    
+    rs2::video_frame img_frame = frame.get_color_frame();
+
+//    float pixel[2] = {0,0}, point[3] = {0,0,10};
+    int w = img_frame.get_width();
+    int h = img_frame.get_height();
+//    auto other_intrin = img_frame.get_profile().as<rs2::video_stream_profile>().get_intrinsics();
+//    rs2_project_point_to_pixel(pixel, &other_intrin, point);
+//    std::cout << "h: " << h << " w: " << w << std::endl;
+//    std::cout << "x: " << static_cast<int>(pixel[0]) << " y: " << static_cast<int>(pixel[1]) << std::endl;
+
     //remap the image
-    int w = frame.get_color_frame().get_width();
-    int h = frame.get_color_frame().get_height();
-    cv::Mat image_aux(Size(w, h), CV_8UC3, (void*)frame.get_color_frame().get_data(), Mat::AUTO_STEP);
+    cv::Mat image_aux(Size(w, h), CV_8UC3, (void*)img_frame.get_data(), Mat::AUTO_STEP);
     cvtColor(image_aux, image, COLOR_BGR2RGB);
     
     //remap the pointClound
@@ -107,4 +114,14 @@ Mat* Realsense::get_img(){
 
 rs2::points* Realsense::getPoints(){
     return &points;
+}
+
+void Realsense::point2pixel(int pixel[2], float point[3]){
+    float pixel_aux[2] = {10,10};
+    rs2::video_frame img_frame = frame.get_color_frame();
+    auto other_intrin = img_frame.get_profile().as<rs2::video_stream_profile>().get_intrinsics();
+
+    rs2_project_point_to_pixel(pixel_aux, &other_intrin, point);
+    pixel[0] =  static_cast<int>(pixel_aux[0]);
+    pixel[1] =  static_cast<int>(pixel_aux[1]);
 }

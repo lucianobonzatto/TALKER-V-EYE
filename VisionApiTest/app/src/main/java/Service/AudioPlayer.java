@@ -6,6 +6,7 @@ package Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -63,4 +64,20 @@ public class AudioPlayer {
             line.write(buffer, 0, n);
         }
     }
+
+   public static void playAudioWithBash() throws IOException {
+      String command = "play /home/lukn23/TALKER-V-EYE/VisionApiTest/app/new_output.mp3";
+
+      final ArrayList<String> commands = new ArrayList<String>();
+      commands.add("/bin/bash");
+      commands.add("-c");
+      commands.add(command);
+
+      try {
+        final ProcessBuilder p = new ProcessBuilder(commands);
+        final Process process = p.start();
+      } catch (IOException ioe) {
+        throw ioe;
+      }   
+   }
 }
