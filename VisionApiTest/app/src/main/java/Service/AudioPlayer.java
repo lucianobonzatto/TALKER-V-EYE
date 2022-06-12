@@ -65,9 +65,7 @@ public class AudioPlayer {
         }
     }
 
-   public static void playAudioWithBash() throws IOException {
-      String command = "play /home/lukn23/TALKER-V-EYE/VisionApiTest/app/new_output.mp3";
-
+   public static void playAudioWithBash(String command) throws IOException {
       final ArrayList<String> commands = new ArrayList<String>();
       commands.add("/bin/bash");
       commands.add("-c");

@@ -51,14 +51,11 @@ public class ServiceExecutorApi implements Runnable {
                 sb.append((char)temp);
             }
             sb.deleteCharAt(sb.length() -1); //removendo o 0 que é enviado pelo socket como termino do envio
-            System.out.println(sb.toString());
 
             String dataStr = sb.toString();
             String[] dataArray = dataStr.split(",");
 
             idType = Integer.parseInt(dataArray[0]);
-
-            //socket.close(); socket será fechado no Service/ServerSocketForImage, apenas o reader e writer são fechados nessa classe
 
             List<ApiImage> imagesList;
             if(idType == 0){
@@ -71,15 +68,15 @@ public class ServiceExecutorApi implements Runnable {
             if (!imagesList.isEmpty()) {
                 String pathMp3File = new ServiceTextToSpeechApi(imagesList).generateAudioFromText();
                 //new AudioPlayer().play(pathMp3File);
-                AudioPlayer.playAudioWithBash();
+                AudioPlayer.playAudioWithBash("play /home/lukn23/TALKER-V-EYE/VisionApiTest/app/new_output.mp3");
                 System.out.println(pathMp3File);
             } else {
+                AudioPlayer.playAudioWithBash("play /home/lukn23/TALKER-V-EYE/VisionApiTest/app/audio_nenhum_identificado.mp3");
                 System.out.println("Não foi identificado um objeto");
             }
             socket.close();
             writer.close();
             reader.close();
-	    System.out.println("fim iteração");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
