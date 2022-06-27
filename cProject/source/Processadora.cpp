@@ -24,57 +24,26 @@ Processadora::Processadora() {
     usleep(1000000);
 
     int teste = 0;
-    while(0){
+    while(teste < 10){
         teste++;
         usleep(80000);
-//        system("clear");
         std::cout << endl << "============================= " << teste << " ===============================" << endl;
-//        teste dos motores crescente
-//        testeMotor();
-
-//      teste dos motores em alto
-//        m4.setIntensity(255);
-//        m3.setIntensity(255);
-//        m2.setIntensity(255);
-//        m1.setIntensity(255);
-//        mp.setIntensity(255);
-
-//        if( b1.getState() == 1)
-//            std::cout << "b1 -> 1" << endl;
-//        if( b2.getState() == 1)
-//            std::cout << "b2 -> 1" << endl;
-//        if( b3.getState() == 1)
-//            std::cout << "b3 -> 1" << endl;
 
         rs_sensor.read_img();
-        cv::Mat* img =  rs_sensor.get_img();
         int h = rs_sensor.get_img_height();
         int w = rs_sensor.get_img_width();
-//        imshow("Display window", *img);
-//        int k = waitKey(0);
+
+        detectaObstaculo();
         if(teste == 5){
-             sockClient.sendImageForApi(img, 0, 0, 0, h, w); //todos os objetos
-//             sockClient.sendImageForApi(img, 1, pixelProx[1], pixelProx[0], h, w); //objeto mais proximo
-             sockClient.sendImageForApi(img);
-  	   cout << "send image finished "<< endl;
+            std::cout << "b3 -> 1" << endl;
+            cv::Mat* img =  rs_sensor.get_img();
+
+            h = rs_sensor.get_img_height();
+            w = rs_sensor.get_img_width();
+//            std::cout << "h " << (float)pixelProx[1]/h << "w: " << (float)pixelProx[0]/w << std::endl;
+//            std::cout << "h " << (float)pixelProx[1] << " w: " << (float)pixelProx[0] << std::endl;
+            sockClient.sendImageForApi(img, 1, pixelProx[1], pixelProx[0], h, w); //objeto mais proximo
  	}
-
-//        float point[3] = {0,0,10};
-//        rs_sensor.point2pixel(pixelProx, point);
-
-
-//        std::cout << "w: " << rs_sensor.get_img_width() << " h: " << rs_sensor.get_img_height() << std::endl;
-//        std::cout << "x: " << pixelProx[0] << " y: " << pixelProx[1] << std::endl;
-//        sockClient.sendImageForApi(img, 1, pixelProx[1], pixelProx[0], h, w); //objeto mais proximo
-
-//        detectaObstaculo();
-//        detectaLidar();
-
-//        std::cout << "\tlidar\t\t->\t" << ll_sensor.getDistance() << std::endl;
-//        rs_sensor.print_points();
-//        printRSDepth();
-//        rs_sensor.print_img();
-//        usleep(1000000);
     }
     m4.setIntensity(0);
     m3.setIntensity(0);
@@ -88,7 +57,7 @@ Processadora::~Processadora() {
 }
 
 void Processadora::loop(){
-    cv::Mat* img =  rs_sensor.get_img();
+    cv::Mat* img;
     int h = rs_sensor.get_img_height();
     int w = rs_sensor.get_img_width();
     int num = 0;
@@ -96,37 +65,35 @@ void Processadora::loop(){
 
     while(1){
         if(habilitado){
-            cout << "\taltura -> " << config.getAlturaRealsense() << endl;
-            cout << "\tbraco -> " << config.getLarguraBraco() << endl;
-            cout << "\tprofMax -> " << config.getProfundidadeMaxima() << endl;
+            //cout << "\taltura -> " << config.getAlturaRealsense() << endl;
+            //cout << "\tbraco -> " << config.getLarguraBraco() << endl;
+            //cout << "\tprofMax -> " << config.getProfundidadeMaxima() << endl;
 
             rs_sensor.read_img();
             detectaObstaculo();
             detectaLidar();
             if( b2.getState() == 1){
-                num++;
+//                num++;
                 std::cout << "b2 -> 1" << endl;
                 img =  rs_sensor.get_img();
-                nome = "/home/lukn23/TALKER-V-EYE/cProject/img/teste"+ to_string(num) + ".jpg";
-                std::cout << nome;
-                imwrite(nome, *img);
+//                nome = "/home/lukn23/TALKER-V-EYE/cProject/img/teste"+ to_string(num) + ".jpg";
+//                std::cout << nome;
+//                imwrite(nome, *img);
                 
-//                img =  rs_sensor.get_img();
-//                sockClient.sendImageForApi(img, 0, 0, 0, h, w); //todos os objetos
+                sockClient.sendImageForApi(img, 0, 0, 0, h, w); //todos os objetos
             }
             else if( b3.getState() == 1){
-                num++;
+//                num++;
                 std::cout << "b3 -> 1" << endl;
                 img =  rs_sensor.get_img();
-                nome = "/home/lukn23/TALKER-V-EYE/cProject/img/teste"+ to_string(num) + ".jpg";
-                std::cout << nome;
-                imwrite(nome, *img);
+//                nome = "/home/lukn23/TALKER-V-EYE/cProject/img/teste"+ to_string(num) + ".jpg";
+//                std::cout << nome;
+//                imwrite(nome, *img);
                 
-//                h = rs_sensor.get_img_height();
-//                w = rs_sensor.get_img_width();
-//                std::cout << "h " << pixelProx[1]/h << "w: " << pixelProx[0]/w << std::endl;
-//                img =  rs_sensor.get_img();
-//                sockClient.sendImageForApi(img, 1, pixelProx[1], pixelProx[0], h, w); //objeto mais proximo
+                h = rs_sensor.get_img_height();
+                w = rs_sensor.get_img_width();
+                std::cout << "h " << pixelProx[1]/h << "w: " << pixelProx[0]/w << std::endl;
+                sockClient.sendImageForApi(img, 1, pixelProx[1], pixelProx[0], h, w); //objeto mais proximo
             }
         }
 
@@ -223,8 +190,8 @@ void Processadora::detectaLidar(){
     float dist = ll_sensor.getDistance();
     int intensidade = converteDistanciaIntensidade_ll(dist);
 
-    std::cout << "\tlidar\t\t->\t" << dist << std::endl;
-    std::cout << "\tIntensidade\t\t->\t" << intensidade << std::endl;
+    //std::cout << "\tlidar\t\t->\t" << dist << std::endl;
+    //std::cout << "\tIntensidade\t\t->\t" << intensidade << std::endl;
     mp.setIntensity(intensidade);
 
 /*    if(dist < DIST_MIN_LL || dist > DIST_MAX_LL){
@@ -281,7 +248,7 @@ void Processadora::detectaObstaculo(){
     float n_pontos_obtaculo_quadrante_3 = 0;
     float n_pontos_obtaculo_quadrante_4 = 0;
 
-    cout << "ponto -> " << vertices[indiceMenorPonto].x << endl;
+    //cout << "ponto -> " << vertices[indiceMenorPonto].x << endl;
 
     /*Segunda varredura na nuvem de pontos*/
     for (int i = 0; i < pontos->size(); i++)
@@ -318,16 +285,21 @@ void Processadora::detectaObstaculo(){
     float point[3] = {vertices[indiceMenorPonto].x, vertices[indiceMenorPonto].y, vertices[indiceMenorPonto].z};
 
     int n_pontos_total = n_pontos_obtaculo_quadrante_1+n_pontos_obtaculo_quadrante_2+n_pontos_obtaculo_quadrante_3+n_pontos_obtaculo_quadrante_4;
-    if(n_pontos_total > 4*MIN_PONTOS_QUADRANTE){
+/*    if(n_pontos_total > 4*MIN_PONTOS_QUADRANTE){
         rs_sensor.point2pixel(pixelProx, point);
+        std::cout << "x " << point[0] << " y: " << point[1] << " z: " << point[2] << std::endl;
+        std::cout << "h " << (float)pixelProx[1] << " w: " << (float)pixelProx[0] << std::endl;
     }
     else{
-         pixelProx[0] = rs_sensor.get_img_width()+10;
-         pixelProx[1] = rs_sensor.get_img_height()+10;
-    }
+         pixelProx[0] = 0;
+         pixelProx[1] = 0;
+    }*/
 
+    pixelProx[0] = 0;
+    pixelProx[1] = 0;
     int intensidade = converteDistanciaIntensidade_rs(distanciaMinima);
     if(n_pontos_obtaculo_quadrante_1 > MIN_PONTOS_QUADRANTE){
+	pixelProx[0] += 1;
         m1.setIntensity(intensidade);
     }
     else{
@@ -335,6 +307,7 @@ void Processadora::detectaObstaculo(){
     }
 
     if(n_pontos_obtaculo_quadrante_2 > MIN_PONTOS_QUADRANTE){
+	pixelProx[0] += 20;
         m2.setIntensity(intensidade);
     }
     else{
@@ -342,6 +315,7 @@ void Processadora::detectaObstaculo(){
     }
 
     if(n_pontos_obtaculo_quadrante_3 > MIN_PONTOS_QUADRANTE){
+	pixelProx[0] += 300;
         m3.setIntensity(intensidade);
     }
     else{
@@ -349,12 +323,15 @@ void Processadora::detectaObstaculo(){
     }
 
     if(n_pontos_obtaculo_quadrante_4 > MIN_PONTOS_QUADRANTE){
+	pixelProx[0] += 4000;
         m4.setIntensity(intensidade);
     }
     else{
         m4.setIntensity(0);
     }
 
+    std::cout << "x " << point[0] << " y: " << point[1] << " z: " << point[2] << std::endl;
+    std::cout << "h " << (float)pixelProx[1] << " w: " << (float)pixelProx[0] << std::endl;
     std::cout << "\tdist - " << distanciaMinima << std::endl;
     std::cout << "\tQ1 - " << n_pontos_obtaculo_quadrante_1 << "\t int - " << m1.getIntensity() << std::endl;
     std::cout << "\tQ2 - " << n_pontos_obtaculo_quadrante_2 << "\t int - " << m2.getIntensity() << std::endl;

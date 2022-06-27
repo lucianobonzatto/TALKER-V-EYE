@@ -51,7 +51,7 @@ public class ServiceExecutorApi implements Runnable {
                 sb.append((char)temp);
             }
             sb.deleteCharAt(sb.length() -1); //removendo o 0 que é enviado pelo socket como termino do envio
-
+            System.out.println("data from socket: " + sb.toString());
             String dataStr = sb.toString();
             String[] dataArray = dataStr.split(",");
 

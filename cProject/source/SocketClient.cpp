@@ -18,7 +18,8 @@ void SocketClient::init() {
 
     //Configure socket
     port = 9090; //port created in Java side
-    ipAdrress = "10.0.0.101"; //modificar de acordo com a rede
+//    ipAdrress = "10.0.0.101"; //modificar de acordo com a rede
+    ipAdrress = "192.168.0.27"; //modificar de acordo com a rede
 //    ipAdrress = "127.0.0.1"; //modificar de acordo com a rede
 //    ipAdrress = "192.168.43.130"; //modificar de acordo com a rede
 

@@ -122,6 +122,9 @@ void Realsense::point2pixel(int pixel[2], float point[3]){
     auto other_intrin = img_frame.get_profile().as<rs2::video_stream_profile>().get_intrinsics();
 
     rs2_project_point_to_pixel(pixel_aux, &other_intrin, point);
-    pixel[0] =  static_cast<int>(pixel_aux[0]);
-    pixel[1] =  static_cast<int>(pixel_aux[1]);
+    pixel[0] =  frame.get_color_frame().get_width() - static_cast<int>(pixel_aux[0]);
+    pixel[1] =  frame.get_color_frame().get_height() - static_cast<int>(pixel_aux[1]);
+    
+    
+    
 }
